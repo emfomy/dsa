@@ -26,3 +26,13 @@
 *.exe
 *.out
 *.app
+
+# Other files
+sftp-config.json
+
+# Folders
+hw2/*
+hw3/*
+hw4/*
+hw5/*
+hw6/*
