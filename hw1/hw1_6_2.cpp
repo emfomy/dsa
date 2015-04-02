@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Data Structures and Algorithms - Homework 1                                //
-// hw1_6.cpp                                                                  //
-// GCD algorithms                                                             //
+// hw1_6_2.cpp                                                                //
+// Run GCD tests                                                              //
 //                                                                            //
 // Author: emfo<emfomy@gmail.com>                                             //
 ////////////////////////////////////////////////////////////////////////////////
@@ -28,50 +28,43 @@ int gcd_by_euclid( const int, const int );
 ////////////////////////////////////////////////////////////////////////////////
 int main()
 {
-  int a, b, d;
-  while ( true ) {
-    // Load data
-    scanf("%d", &a);
-    if ( a == 0 ) {
-      break;
-    }
-    scanf("%d", &b);
+  int a, b, n;
+  iter0 = 0; iter1 = 0; iter2 = 0; iter3 = 0; iter4 = 0;
 
+  for ( a = 11260, b = 52000, n = 0; b <= 54260; ++b, ++n ) {
     // GCD-By-Reverse-Search
-    iter0 = 0;
-    d = gcd_by_reverse_search(a, b);
-    printf(
-        "Case (%d, %d): GCD-By-Reverse-Search = %d, taking %d iterations\n",
-        a, b, d, iter0);
+    gcd_by_reverse_search( a, b );
 
     // GCD-By-Filter
-    iter1 = 0;
-    d = gcd_by_filter(a, b);
-    printf(
-        "Case (%d, %d): GCD-By-Filter = %d, taking %d iterations\n",
-        a, b, d, iter1);
+    gcd_by_filter( a, b );
 
     // GCD-By-Filter-Faster
-    iter2 = 0;
-    d = gcd_by_filter_faster(a, b);
-    printf(
-        "Case (%d, %d): GCD-By-Filter-Faster = %d, taking %d iterations\n",
-        a, b, d, iter2);
+    gcd_by_filter_faster( a, b );
 
     // GCD-By-Binary
-    iter3 = 0;
-    d = gcd_by_binary(a, b);
-    printf(
-        "Case (%d, %d): GCD-By-Binary = %d, taking %d iterations\n",
-        a, b, d, iter3);
+    gcd_by_binary( a, b );
 
     // GCD-By-Euclid
-    iter4 = 0;
-    d = gcd_by_euclid(a, b);
-    printf(
-        "Case (%d, %d): GCD-By-Euclid = %d, taking %d iterations\n",
-        a, b, d, iter4);
+    gcd_by_euclid( a, b );
   }
+
+  // Display result
+  printf(
+      "GCD-By-Reverse-Search: taking %12.6lf iterations averagely\n",
+      (double) iter0 / n);
+  printf(
+      "GCD-By-Filter:         taking %12.6lf iterations averagely\n",
+      (double) iter1 / n);
+  printf(
+      "GCD-By-Filter-Faster:  taking %12.6lf iterations averagely\n",
+      (double) iter2 / n);
+  printf(
+      "GCD-By-Binary:         taking %12.6lf iterations averagely\n",
+      (double) iter3 / n);
+  printf(
+      "GCD-By-Euclid:         taking %12.6lf iterations averagely\n",
+      (double) iter4 / n);
+
   return 0;
 }
 

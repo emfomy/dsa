@@ -1,4 +1,4 @@
-target = hw1_6 gcd_by_binary gcd_by_euclid
+target = hw1_6 hw1_6_2 gcd_by_binary gcd_by_euclid
 CFLAGS = -O2 -Wall
 CPPFLAGS = -O2 -std=c++11 -Wall
 
@@ -21,6 +21,9 @@ clean:
 
 run1_6:
 	./hw1_6
+
+run1_6_2:
+	./hw1_6_2
 
 run1_7_1:
 	./gcd_by_binary
