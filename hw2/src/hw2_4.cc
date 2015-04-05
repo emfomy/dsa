@@ -36,9 +36,7 @@ int main( int argc, char *argv[] ) {
     cin >> str;
     if ( str == "quit" ) {
       break;
-    }
-    cout << "********************" << endl;
-    if ( str == "get" ) {
+    } else if ( str == "get" ) {
       get(uroot);
     } else if ( str == "clicked" ) {
       clicked(uroot);
@@ -47,7 +45,6 @@ int main( int argc, char *argv[] ) {
     } else if ( str == "profit" ) {
       profit(aroot);
     }
-    cout << "********************" << endl;
   }
 
   return 0;
@@ -63,7 +60,9 @@ int main( int argc, char *argv[] ) {
 void get( UNodeRoot& uroot ) {
   UserID u; AdID a; QueryID q; Position p; Depth d;
   cin >> u >> a >> q >> p >> d;
+  cout << "********************" << endl;
   cout << uroot[u][a][q][p][d] << endl;
+  cout << "********************" << endl;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -76,6 +75,7 @@ void get( UNodeRoot& uroot ) {
 void clicked( UNodeRoot& uroot ) {
   UserID u;
   cin >> u;
+  cout << "********************" << endl;
   for ( auto& paira : uroot[u].child ) {
     for ( auto& pairq : paira.second.child ) {
       if ( pairq.second.clicked ) {
@@ -83,6 +83,7 @@ void clicked( UNodeRoot& uroot ) {
       }
     }
   }
+  cout << "********************" << endl;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -95,6 +96,7 @@ void clicked( UNodeRoot& uroot ) {
 void impressed( ANodeRoot& aroot ) {
   UserID u1, u2;
   cin >> u1 >> u2;
+  cout << "********************" << endl;
   for ( auto& paira : aroot.child ) {
     bool btemp = true;
     for ( auto& pairp : paira.second.child ) {
@@ -108,6 +110,7 @@ void impressed( ANodeRoot& aroot ) {
       }
     }
   }
+  cout << "********************" << endl;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -121,9 +124,11 @@ void impressed( ANodeRoot& aroot ) {
 void profit( ANodeRoot& aroot ) {
   AdID a; double theta;
   cin >> a >> theta;
+  cout << "********************" << endl;
   for ( auto& pairu : aroot[a].child_user_id ) {
     if( pairu.second.ctr() >= theta ) {
       cout << pairu.first << endl;
     }
   }
+  cout << "********************" << endl;
 }
