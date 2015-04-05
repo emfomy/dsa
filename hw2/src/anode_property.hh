@@ -1,0 +1,42 @@
+////////////////////////////////////////////////////////////////////////////////
+// Data Structures and Algorithms - Homework 2                                //
+// anode_property.hh                                                          //
+// The header file of ANodeProperty                                           //
+//                                                                            //
+// Author: emfo<emfomy@gmail.com>                                             //
+////////////////////////////////////////////////////////////////////////////////
+
+#ifndef HW2_ANODE_PROPERTY_HH_
+
+#define HW2_ANODE_PROPERTY_HH_
+
+#include <map>
+#include "hw2.hh"
+#include "line.hh"
+#include "property.hh"
+
+////////////////////////////////////////////////////////////////////////////////
+// The namespace hw2                                                          //
+////////////////////////////////////////////////////////////////////////////////
+namespace hw2 {
+
+////////////////////////////////////////////////////////////////////////////////
+// The class of a Property node in A-tree                                     //
+////////////////////////////////////////////////////////////////////////////////
+class ANodeProperty {
+ public:
+  // The the set of UserIDs
+  SetUserID child;
+
+  ANodeProperty();
+  void insert( Line& );
+};
+
+////////////////////////////////////////////////////////////////////////////////
+// The tree map of ANodeProperty                                              //
+////////////////////////////////////////////////////////////////////////////////
+typedef std::map<Property, ANodeProperty> AMapProperty;
+
+}
+
+#endif
