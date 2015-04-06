@@ -1,7 +1,7 @@
 CC       = g++
 OPTFLAGS = -O2 -std=c++11 -Wall
 
-TARGET = hw2_4
+TARGET = demo
 
 OBJS  = \
 	src/hw2_4.o \
