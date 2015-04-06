@@ -32,6 +32,9 @@ class ANodeAdID {
   // The the map of UserID nodes
   AMapUserID child_user_id;
 
+  // The the set of UserIDs that impressed this node
+  SetUserID impressed;
+
   ANodeAdID();
   void insert( Line& );
 };
