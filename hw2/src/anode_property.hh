@@ -25,8 +25,8 @@ namespace hw2 {
 ////////////////////////////////////////////////////////////////////////////////
 class ANodeProperty {
  public:
-  // The the set of UserIDs
-  SetUserID child;
+  // The the set of UserIDs that impressed this node
+  SetUserID impressed;
 
   ANodeProperty();
   void insert( Line& );

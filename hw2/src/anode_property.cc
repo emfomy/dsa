@@ -26,7 +26,7 @@ ANodeProperty::ANodeProperty() {
 // line: the inserted line object                                             //
 ////////////////////////////////////////////////////////////////////////////////
 void ANodeProperty::insert( Line& line ) {
-  child.emplace(line.user_id);
+  impressed.emplace(line.user_id);
 }
 
 }

@@ -38,19 +38,19 @@ Property::Property( Line& line ) {
 // the whether this object is smaller or not                                  //
 ////////////////////////////////////////////////////////////////////////////////
 bool Property::operator<( const Property& rhs ) const {
-  if( display_url != rhs.display_url ) {
+  if ( display_url != rhs.display_url ) {
     return (display_url < rhs.display_url);
   }
-  if( advertiser_id != rhs.advertiser_id ) {
+  if ( advertiser_id != rhs.advertiser_id ) {
     return (advertiser_id < rhs.advertiser_id);
   }
-  if( keyword_id != rhs.keyword_id ) {
+  if ( keyword_id != rhs.keyword_id ) {
     return (keyword_id < rhs.keyword_id);
   }
-  if( title_id != rhs.title_id ) {
+  if ( title_id != rhs.title_id ) {
     return (title_id < rhs.title_id);
   }
-  if( description_id != rhs.description_id ) {
+  if ( description_id != rhs.description_id ) {
     return (description_id < rhs.description_id);
   }
   return false;
@@ -65,7 +65,7 @@ bool Property::operator<( const Property& rhs ) const {
 //                                                                            //
 // Return Value:                                                              //
 // the ostream object                                                         //
-////////////////////////////////////////////////////////////////////////////////;
+////////////////////////////////////////////////////////////////////////////////
 std::ostream& operator<<( std::ostream& os, const Property& obj ) {
   os << obj.display_url << ' ' << obj.advertiser_id  << ' '
      << obj.keyword_id  << ' ' << obj.title_id       << ' '
