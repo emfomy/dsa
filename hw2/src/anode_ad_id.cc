@@ -29,6 +29,7 @@ void ANodeAdID::insert( Line& line ) {
   Property prop(line);
   if ( line.impression ) {
     child.emplace(prop, ANodeProperty{}).first->second.insert(line);
+    impressed.emplace(line.user_id);
   }
   child_user_id.emplace(line.user_id, ANodeUserID{}).first->second.insert(line);
 }

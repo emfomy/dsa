@@ -98,15 +98,14 @@ void impressed( ANodeRoot& aroot ) {
   cin >> u1 >> u2;
   cout << "********************" << endl;
   for ( auto& paira : aroot.child ) {
-    bool btemp = true;
-    for ( auto& pairp : paira.second.child ) {
-      if( pairp.second.child.count(u1)
-          && pairp.second.child.count(u2) ) {
-        if ( btemp ) {
-          btemp = false;
-          cout << paira.first << endl;
+    if ( paira.second.impressed.count(u1)
+         && paira.second.impressed.count(u2) ) {
+      cout << paira.first << endl;
+      for ( auto& pairp : paira.second.child ) {
+        if ( pairp.second.impressed.count(u1)
+             || pairp.second.impressed.count(u2) ) {
+          cout << '\t' << pairp.first << endl;
         }
-        cout << '\t' << pairp.first << endl;
       }
     }
   }
@@ -126,7 +125,7 @@ void profit( ANodeRoot& aroot ) {
   cin >> a >> theta;
   cout << "********************" << endl;
   for ( auto& pairu : aroot[a].child_user_id ) {
-    if( pairu.second.ctr() >= theta ) {
+    if ( pairu.second.ctr() >= theta ) {
       cout << pairu.first << endl;
     }
   }
