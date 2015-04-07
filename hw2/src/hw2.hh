@@ -21,18 +21,18 @@ namespace hw2 {
 ////////////////////////////////////////////////////////////////////////////////
 // Base types                                                                 //
 ////////////////////////////////////////////////////////////////////////////////
-typedef uint64_t UserID; 
-typedef uint64_t AdID;
-typedef uint64_t QueryID;
-typedef uint64_t Position;
-typedef uint64_t Depth;
-typedef uint64_t Click;
-typedef uint64_t Impression;
+typedef uint64_t UserID;
+typedef uint32_t AdID;
+typedef uint32_t QueryID;
+typedef uint16_t Position;
+typedef uint16_t Depth;
+typedef uint32_t Click;
+typedef uint32_t Impression;
 typedef uint64_t DisplayURL;
-typedef uint64_t AdvertiserID;
-typedef uint64_t KeywordID;
-typedef uint64_t TitleID;
-typedef uint64_t DescriptionID;
+typedef uint16_t AdvertiserID;
+typedef uint32_t KeywordID;
+typedef uint32_t TitleID;
+typedef uint32_t DescriptionID;
 
 ////////////////////////////////////////////////////////////////////////////////
 // The hash set of UserID                                                     //

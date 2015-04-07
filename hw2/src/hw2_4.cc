@@ -23,7 +23,7 @@ int main( int argc, char *argv[] ) {
   string str;
 
   // Read data from file
-  ifstream fin(argv[1]); 
+  ifstream fin(argv[1]);
   while ( fin.good() ) {
     fin >> line;
     uroot.insert(line);

@@ -39,7 +39,7 @@ void UNodePosition::insert( Line& line ) {
 // Return:                                                                    //
 // the node of the AdID                                                       //
 ////////////////////////////////////////////////////////////////////////////////
-UNodeDepth& UNodePosition::operator[]( AdID depth ) {
+UNodeDepth& UNodePosition::operator[]( Depth depth ) {
   return child[depth];
 }
 
