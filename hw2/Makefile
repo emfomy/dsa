@@ -3,7 +3,7 @@ OPTFLAGS = -O2 -std=c++11 -Wall
 
 TARGET = demo
 
-OBJS  = \
+OBJS = \
 	src/hw2_4.o \
 	src/line.o \
 	src/property.o \
