@@ -10,7 +10,7 @@
 
 #define HW2_ANODE_USER_ID_HH_
 
-#include <unordered_map>
+#include <map>
 #include "hw2.hh"
 #include "line.hh"
 
@@ -36,9 +36,9 @@ class ANodeUserID {
 };
 
 ////////////////////////////////////////////////////////////////////////////////
-// The hash map of UserID to ANodeUserID                                      //
+// The tree map of UserID to ANodeUserID                                      //
 ////////////////////////////////////////////////////////////////////////////////
-typedef std::unordered_map<UserID, ANodeUserID> AMapUserID;
+typedef std::map<UserID, ANodeUserID> AMapUserID;
 
 }
 
