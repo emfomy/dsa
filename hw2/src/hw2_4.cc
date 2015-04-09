@@ -61,7 +61,7 @@ void get( UNodeRoot& uroot ) {
   UserID u; AdID a; QueryID q; Position p; Depth d;
   cin >> u >> a >> q >> p >> d;
   cout << "********************" << endl;
-  cout << uroot[u][a][q][p][d] << endl;
+  cout << uroot[u][a][q].at(p, d) << endl;
   cout << "********************" << endl;
 }
 

@@ -25,7 +25,7 @@ ANodeProperty::ANodeProperty() {
 // Parameters:                                                                //
 // line: the inserted line object                                             //
 ////////////////////////////////////////////////////////////////////////////////
-void ANodeProperty::insert( Line& line ) {
+void ANodeProperty::insert( const Line& line ) {
   impressed.emplace(line.user_id);
 }
 

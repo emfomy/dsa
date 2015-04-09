@@ -28,8 +28,8 @@ class ANodeRoot {
   AMapAdID child;
 
   ANodeRoot();
-  void insert( Line& );
-  ANodeAdID& operator[]( AdID );
+  void insert( const Line& );
+  ANodeAdID& operator[]( const AdID );
 };
 
 }

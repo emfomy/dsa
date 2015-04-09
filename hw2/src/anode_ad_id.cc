@@ -25,7 +25,7 @@ ANodeAdID::ANodeAdID() {
 // Parameters:                                                                //
 // line: the inserted line object                                             //
 ////////////////////////////////////////////////////////////////////////////////
-void ANodeAdID::insert( Line& line ) {
+void ANodeAdID::insert( const Line& line ) {
   if ( line.impression ) {
     Property prop(line);
     child.emplace(prop, ANodeProperty{}).first->second.insert(line);
