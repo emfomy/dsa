@@ -26,12 +26,10 @@ ANodeAdID::ANodeAdID() {
 // line: the inserted line object                                             //
 ////////////////////////////////////////////////////////////////////////////////
 void ANodeAdID::insert( const Line& line ) {
-  if ( line.impression ) {
-    Property prop(line);
-    child.emplace(prop, ANodeProperty{}).first->second.insert(line);
-    impressed.emplace(line.user_id);
-  }
+  Property prop(line);
+  child.emplace(prop, ANodeProperty{}).first->second.insert(line);
   child_user_id.emplace(line.user_id, ANodeUserID{}).first->second.insert(line);
+  impressed.emplace(line.user_id);
 }
 
 }

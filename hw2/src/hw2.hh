@@ -21,7 +21,7 @@ namespace hw2 {
 ////////////////////////////////////////////////////////////////////////////////
 // Base types                                                                 //
 ////////////////////////////////////////////////////////////////////////////////
-typedef uint64_t UserID;        // Range: 0 ~ 23907634
+typedef uint32_t UserID;        // Range: 0 ~ 23907634
 typedef uint32_t AdID;          // Range: 1000031 ~ 22238277
 typedef uint32_t QueryID;       // Range: 0 ~ 26243605
 typedef uint16_t Position;      // Range: 1 ~ 3
