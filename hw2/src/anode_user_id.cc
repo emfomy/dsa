@@ -27,7 +27,7 @@ ANodeUserID::ANodeUserID() {
 // Parameters:                                                                //
 // line: the inserted line object                                             //
 ////////////////////////////////////////////////////////////////////////////////
-void ANodeUserID::insert( Line& line ) {
+void ANodeUserID::insert( const Line& line ) {
   click += line.click;
   impression += line.impression;
 }

@@ -29,8 +29,8 @@ class UNodeAdID {
   UMapQueryID child;
 
   UNodeAdID();
-  void insert( Line& );
-  UNodeQueryID& operator[]( QueryID );
+  void insert( const Line& );
+  UNodeQueryID& operator[]( const QueryID );
 };
 
 ////////////////////////////////////////////////////////////////////////////////

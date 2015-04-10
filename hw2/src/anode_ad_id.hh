@@ -36,7 +36,7 @@ class ANodeAdID {
   SetUserID impressed;
 
   ANodeAdID();
-  void insert( Line& );
+  void insert( const Line& );
 };
 
 ////////////////////////////////////////////////////////////////////////////////

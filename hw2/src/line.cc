@@ -32,7 +32,7 @@ Line::Line() {
 ////////////////////////////////////////////////////////////////////////////////
 std::istream& operator>>( std::istream& is, Line& obj ) {
   is >> obj.click    >> obj.impression     >> obj.display_url
-     >> obj.ad_id    >> obj.advertiser_id  >> obj.depth      
+     >> obj.ad_id    >> obj.advertiser_id  >> obj.depth
      >> obj.position >> obj.query_id       >> obj.keyword_id
      >> obj.title_id >> obj.description_id >> obj.user_id;
   return is;

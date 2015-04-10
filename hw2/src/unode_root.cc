@@ -25,7 +25,7 @@ UNodeRoot::UNodeRoot() {
 // Parameters:                                                                //
 // line: the inserted line object                                             //
 ////////////////////////////////////////////////////////////////////////////////
-void UNodeRoot::insert( Line& line ) {
+void UNodeRoot::insert( const Line& line ) {
   child.emplace(line.user_id, UNodeUserID{}).first->second.insert(line);
 }
 
@@ -39,7 +39,7 @@ void UNodeRoot::insert( Line& line ) {
 // Return:                                                                    //
 // the node of the UserID                                                     //
 ////////////////////////////////////////////////////////////////////////////////
-UNodeUserID& UNodeRoot::operator[]( UserID user_id ) {
+UNodeUserID& UNodeRoot::operator[]( const UserID user_id ) {
   return child[user_id];
 }
 

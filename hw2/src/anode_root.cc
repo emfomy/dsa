@@ -25,7 +25,7 @@ ANodeRoot::ANodeRoot() {
 // Parameters:                                                                //
 // line: the inserted line object                                             //
 ////////////////////////////////////////////////////////////////////////////////
-void ANodeRoot::insert( Line& line ) {
+void ANodeRoot::insert( const Line& line ) {
   child.emplace(line.ad_id, ANodeAdID{}).first->second.insert(line);
 }
 
@@ -39,7 +39,7 @@ void ANodeRoot::insert( Line& line ) {
 // Return:                                                                    //
 // the node of the AdID                                                       //
 ////////////////////////////////////////////////////////////////////////////////
-ANodeAdID& ANodeRoot::operator[]( AdID ad_id ) {
+ANodeAdID& ANodeRoot::operator[]( const AdID ad_id ) {
   return child[ad_id];
 }
 
