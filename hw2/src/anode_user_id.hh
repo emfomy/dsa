@@ -31,7 +31,7 @@ class ANodeUserID {
   Impression impression;
 
   ANodeUserID();
-  void insert( Line& );
+  void insert( const Line& );
   double ctr();
 };
 

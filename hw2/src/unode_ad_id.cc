@@ -25,7 +25,7 @@ UNodeAdID::UNodeAdID() {
 // Parameters:                                                                //
 // line: the inserted line object                                             //
 ////////////////////////////////////////////////////////////////////////////////
-void UNodeAdID::insert( Line& line ) {
+void UNodeAdID::insert( const Line& line ) {
   child.emplace(line.query_id, UNodeQueryID{}).first->second.insert(line);
 }
 
@@ -39,7 +39,7 @@ void UNodeAdID::insert( Line& line ) {
 // Return:                                                                    //
 // the node of the QueryID                                                    //
 ////////////////////////////////////////////////////////////////////////////////
-UNodeQueryID& UNodeAdID::operator[]( QueryID query_id ) {
+UNodeQueryID& UNodeAdID::operator[]( const QueryID query_id ) {
   return child[query_id];
 }
 

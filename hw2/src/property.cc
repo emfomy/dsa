@@ -20,7 +20,7 @@ namespace hw2 {
 // Parameters:                                                                //
 // line: the line object                                                      //
 ////////////////////////////////////////////////////////////////////////////////
-Property::Property( Line& line ) {
+Property::Property( const Line& line ) {
   display_url    = line.display_url;
   advertiser_id  = line.advertiser_id;
   keyword_id     = line.keyword_id;

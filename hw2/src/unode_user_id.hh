@@ -29,8 +29,8 @@ class UNodeUserID {
   UMapAdID child;
 
   UNodeUserID();
-  void insert( Line& );
-  UNodeAdID& operator[]( AdID );
+  void insert( const Line& );
+  UNodeAdID& operator[]( const AdID );
 };
 
 ////////////////////////////////////////////////////////////////////////////////

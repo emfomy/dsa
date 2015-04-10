@@ -13,7 +13,7 @@
 #include <map>
 #include "hw2.hh"
 #include "line.hh"
-#include "unode_position.hh"
+#include "unode_pos_dep.hh"
 
 ////////////////////////////////////////////////////////////////////////////////
 // The namespace hw2                                                          //
@@ -25,15 +25,15 @@ namespace hw2 {
 ////////////////////////////////////////////////////////////////////////////////
 class UNodeQueryID {
  public:
-  // The map of Position nodes
-  UMapPosition child;
+  // The map of PosDep nodes
+  UMapPosDep child;
 
   // Whether this node is clicked or not
   bool clicked;
 
   UNodeQueryID();
-  void insert( Line& );
-  UNodePosition& operator[]( Position );
+  void insert( const Line& );
+  UNodePosDep& at( const Position, const Depth );
 };
 
 ////////////////////////////////////////////////////////////////////////////////

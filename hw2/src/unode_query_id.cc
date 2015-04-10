@@ -26,23 +26,25 @@ UNodeQueryID::UNodeQueryID() {
 // Parameters:                                                                //
 // line: the inserted line object                                             //
 ////////////////////////////////////////////////////////////////////////////////
-void UNodeQueryID::insert( Line& line ) {
-  child.emplace(line.position, UNodePosition{}).first->second.insert(line);
+void UNodeQueryID::insert( const Line& line ) {
+  child.emplace(4*line.position + line.depth, UNodePosDep{}).first
+      ->second.insert(line);
   clicked = clicked || (line.click > 0);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Access element                                                             //
-// Access the node of given Position                                          //
+// Access the node of given Position and Depth                                //
 //                                                                            //
 // Parameters:                                                                //
 // position: the Position                                                     //
+// depth   : the Depth                                                        //
 //                                                                            //
 // Return:                                                                    //
-// the node of the Position                                                   //
+// the node of the PosDep                                                     //
 ////////////////////////////////////////////////////////////////////////////////
-UNodePosition& UNodeQueryID::operator[]( Position position ) {
-  return child[position];
+UNodePosDep& UNodeQueryID::at( const Position position, const Depth depth ) {
+  return child[4*position + depth];
 }
 
 }

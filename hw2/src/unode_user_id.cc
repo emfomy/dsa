@@ -25,7 +25,7 @@ UNodeUserID::UNodeUserID() {
 // Parameters:                                                                //
 // line: the inserted line object                                             //
 ////////////////////////////////////////////////////////////////////////////////
-void UNodeUserID::insert( Line& line ) {
+void UNodeUserID::insert( const Line& line ) {
   child.emplace(line.ad_id, UNodeAdID{}).first->second.insert(line);
 }
 
@@ -39,7 +39,7 @@ void UNodeUserID::insert( Line& line ) {
 // Return:                                                                    //
 // the node of the AdID                                                       //
 ////////////////////////////////////////////////////////////////////////////////
-UNodeAdID& UNodeUserID::operator[]( AdID ad_id ) {
+UNodeAdID& UNodeUserID::operator[]( const AdID ad_id ) {
   return child[ad_id];
 }
 

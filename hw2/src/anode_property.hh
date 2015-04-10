@@ -29,7 +29,7 @@ class ANodeProperty {
   SetUserID impressed;
 
   ANodeProperty();
-  void insert( Line& );
+  void insert( const Line& );
 };
 
 ////////////////////////////////////////////////////////////////////////////////

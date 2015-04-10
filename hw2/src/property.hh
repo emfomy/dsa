@@ -29,7 +29,7 @@ public:
   TitleID title_id;
   DescriptionID description_id;
 
-  Property( Line& );
+  Property( const Line& );
   bool operator<( const Property& ) const;
   friend std::ostream& operator<<( std::ostream&, const Property& );
 };

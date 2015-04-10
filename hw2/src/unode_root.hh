@@ -28,8 +28,8 @@ class UNodeRoot {
   UMapUserID child;
 
   UNodeRoot();
-  void insert( Line& );
-  UNodeUserID& operator[]( UserID );
+  void insert( const Line& );
+  UNodeUserID& operator[]( const UserID );
 };
 
 }

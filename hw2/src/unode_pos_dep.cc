@@ -1,12 +1,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Data Structures and Algorithms - Homework 2                                //
-// unode_position.cc                                                          //
-// The class UNodePosition                                                    //
+// unode_pos_dep.cc                                                           //
+// The class UNodePosDep                                                    //
 //                                                                            //
 // Author: emfo<emfomy@gmail.com>                                             //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "unode_position.hh"
+#include "unode_pos_dep.hh"
 
 ////////////////////////////////////////////////////////////////////////////////
 // The namespace hw2                                                          //
@@ -14,9 +14,11 @@
 namespace hw2 {
 
 ////////////////////////////////////////////////////////////////////////////////
-// The constructor of UNodePosition                                           //
+// The constructor of UNodePosDep                                              //
 ////////////////////////////////////////////////////////////////////////////////
-UNodePosition::UNodePosition() {
+UNodePosDep::UNodePosDep() {
+  click = 0;
+  impression = 0;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -25,22 +27,24 @@ UNodePosition::UNodePosition() {
 // Parameters:                                                                //
 // line: the inserted line object                                             //
 ////////////////////////////////////////////////////////////////////////////////
-void UNodePosition::insert( Line& line ) {
-  child.emplace(line.depth, UNodeDepth{}).first->second.insert(line);
+void UNodePosDep::insert( const Line& line ) {
+  click += line.click;
+  impression += line.impression;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// Access element                                                             //
-// Access the node of given AdID                                              //
+// Insert into stream                                                         //
 //                                                                            //
 // Parameters:                                                                //
-// depth: the AdID                                                            //
+// os:  the ostream object                                                    //
+// obj: the node object to be inserted into the stream                        //
 //                                                                            //
-// Return:                                                                    //
-// the node of the AdID                                                       //
+// Return Value:                                                              //
+// the ostream object                                                         //
 ////////////////////////////////////////////////////////////////////////////////
-UNodeDepth& UNodePosition::operator[]( AdID depth ) {
-  return child[depth];
+std::ostream& operator<<( std::ostream& os, const UNodePosDep& obj ) {
+  os << obj.click << ' ' << obj.impression;
+  return os;
 }
 
 }
