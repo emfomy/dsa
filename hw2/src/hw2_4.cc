@@ -24,8 +24,7 @@ int main( int argc, char *argv[] ) {
 
   // Read data from file
   ifstream fin(argv[1]);
-  while ( fin.good() ) {
-    fin >> line;
+  while ( fin >> line ) {
     uroot.insert(line);
     aroot.insert(line);
   }
