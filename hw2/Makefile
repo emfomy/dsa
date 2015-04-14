@@ -11,8 +11,7 @@ OBJS = \
 	src/unode_user_id.o \
 	src/unode_ad_id.o \
 	src/unode_query_id.o \
-	src/unode_position.o \
-	src/unode_depth.o \
+	src/unode_pos_dep.o \
 	src/anode_root.o \
 	src/anode_ad_id.o \
 	src/anode_property.o \
@@ -27,8 +26,7 @@ HEADERS = \
 	src/unode_user_id.hh \
 	src/unode_ad_id.hh \
 	src/unode_query_id.hh \
-	src/unode_position.hh \
-	src/unode_depth.hh \
+	src/unode_pos_dep.hh \
 	src/anode_root.hh \
 	src/anode_ad_id.hh \
 	src/anode_property.hh \
