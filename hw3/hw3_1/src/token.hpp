@@ -12,7 +12,9 @@
 
 #include <iostream>
 #include <cstdint>
+#include <queue>
 #include <stack>
+#include <string>
 #include "hw3.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -24,10 +26,11 @@ typedef int (*Unary)(const int);
 typedef int (*Binary)(const int, const int);
 
 ////////////////////////////////////////////////////////////////////////////////
-// The stack of Token                                                         //
+// The queue and stack of Token                                               //
 ////////////////////////////////////////////////////////////////////////////////
 class Token;
-typedef std::stack<Token> StackToken;
+typedef std::queue<Token> TokenQueue;
+typedef std::stack<Token> TokenStack;
 
 ////////////////////////////////////////////////////////////////////////////////
 // The class of a token                                                       //
@@ -36,7 +39,7 @@ class Token
 {
  private:
   // The name of this token.
-  // Empty means this token is a number.
+  // "#" this token is a number.
   std::string name_;
 
   // The number of this token.
@@ -44,8 +47,10 @@ class Token
   int32_t number_;
 
   // The precedence of this token.
-  // '-1' means this token is a number.
-  int8_t precedence_;
+  // '0x00' means this token is a number.
+  // '0xFF' means this token is a left parenthesis.
+  // '0xFE' means this token is a right parenthesis.
+  uint8_t precedence_;
 
   // The associativity of this token.
   // 'true'  means the token is left-to-right.
@@ -59,13 +64,12 @@ class Token
   Binary binary_;
 
  public:
-  Token( const char*, int8_t, bool, Unary, Binary );
+  Token( const char*, uint8_t, bool, Unary, Binary );
   Token( int32_t );
 
-  std::string name();
-  bool associativity();
+  uint8_t precedence();
 
-  int operator()( StackToken& ) const;
+  int operator()( TokenStack& ) const;
   bool operator<( const Token& ) const;
   friend std::ostream& operator<<( std::ostream&, const Token& );
 };
@@ -73,50 +77,50 @@ class Token
 ////////////////////////////////////////////////////////////////////////////////
 // Non-numeric tokens                                                         //
 ////////////////////////////////////////////////////////////////////////////////
-const Token kLeftParenthesis =
-    Token("(" , 0,  true, NULL, NULL);
-const Token kRightParenthesis =
-    Token(")" , 0,  true, NULL, NULL);
+const Token kTokenLeftParenthesis =
+    Token("(" , 0xFF, true, NULL, NULL);
+const Token kTokenRightParenthesis =
+    Token(")" , 0xFE, true, NULL, NULL);
 // Level three
-const Token kUnaryPlus =
-    Token("+" , 3, false, [](int x)->int{return (+x);}, NULL);
-const Token kUnaryMinus =
-    Token("-" , 3, false, [](int x)->int{return (-x);}, NULL);
-const Token kLogicalNOT =
-    Token("!" , 3, false, [](int x)->int{return (!x);}, NULL);
-const Token kBitwiseNOT =
-    Token("~" , 3, false, [](int x)->int{return (~x);}, NULL);
+const Token kTokenUnaryPlus =
+    Token("+" , 0x03, false, [](int x)->int{return (+x);}, NULL);
+const Token kTokenUnaryMinus =
+    Token("-" , 0x03, false, [](int x)->int{return (-x);}, NULL);
+const Token kTokenLogicalNOT =
+    Token("!" , 0x03, false, [](int x)->int{return (!x);}, NULL);
+const Token kTokenBitwiseNOT =
+    Token("~" , 0x03, false, [](int x)->int{return (~x);}, NULL);
 // Level five
-const Token kMultiplication =
-    Token("*" , 5,  true, NULL, [](int x, int y)->int{return (x * y);});
-const Token kDivision =
-    Token("/" , 5,  true, NULL, [](int x, int y)->int{return (x / y);});
-const Token kModulo =
-    Token("%" , 5,  true, NULL, [](int x, int y)->int{return (x % y);});
+const Token kTokenMultiplication =
+    Token("*" , 0x05, true, NULL, [](int x, int y)->int{return (x * y);});
+const Token kTokenDivision =
+    Token("/" , 0x05, true, NULL, [](int x, int y)->int{return (x / y);});
+const Token kTokenModulo =
+    Token("%" , 0x05, true, NULL, [](int x, int y)->int{return (x % y);});
 // Level six
-const Token kAddition =
-    Token("+" , 6,  true, NULL, [](int x, int y)->int{return (x + y);});
-const Token kSubtraction =
-    Token("-" , 6,  true, NULL, [](int x, int y)->int{return (x - y);});
-const Token kBitwiseLeftShift =
-    Token("<<", 6,  true, NULL, [](int x, int y)->int{return (x << y);});
-const Token kBitwiseRightShift =
-    Token(">>", 6,  true, NULL, [](int x, int y)->int{return (x >> y);});
+const Token kTokenAddition =
+    Token("+" , 0x06, true, NULL, [](int x, int y)->int{return (x + y);});
+const Token kTokenSubtraction =
+    Token("-" , 0x06, true, NULL, [](int x, int y)->int{return (x - y);});
+const Token kTokenBitwiseLeftShift =
+    Token("<<", 0x06, true, NULL, [](int x, int y)->int{return (x << y);});
+const Token kTokenBitwiseRightShift =
+    Token(">>", 0x06, true, NULL, [](int x, int y)->int{return (x >> y);});
 // Level ten
-const Token kBitwiseAND =
-    Token("&" , 10, true, NULL, [](int x, int y)->int{return (x & y);});
+const Token kTokenBitwiseAND =
+    Token("&" , 0x0A, true, NULL, [](int x, int y)->int{return (x & y);});
 // Level eleven
-const Token kBitwiseXOR =
-    Token("^" , 11, true, NULL, [](int x, int y)->int{return (x ^ y);});
+const Token kTokenBitwiseXOR =
+    Token("^" , 0x0B, true, NULL, [](int x, int y)->int{return (x ^ y);});
 // Level twelve
-const Token kBitwiseOR =
-    Token("|" , 12, true, NULL, [](int x, int y)->int{return (x | y);});
+const Token kTokenBitwiseOR =
+    Token("|" , 0x0C, true, NULL, [](int x, int y)->int{return (x | y);});
 // Level thirteen
-const Token kLogicalAND =
-    Token("&&", 13, true, NULL, [](int x, int y)->int{return (x && y);});
+const Token kTokenLogicalAND =
+    Token("&&", 0x0D, true, NULL, [](int x, int y)->int{return (x && y);});
 // Level fourteen
-const Token kLogicalOR =
-    Token("||", 14, true, NULL, [](int x, int y)->int{return (x || y);});
+const Token kTokenLogicalOR =
+    Token("||", 0x0E, true, NULL, [](int x, int y)->int{return (x || y);});
 
 }
 

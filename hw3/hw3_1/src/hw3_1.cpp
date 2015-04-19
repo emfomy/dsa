@@ -8,6 +8,7 @@
 
 #include "hw3_1.hpp"
 #include "token.hpp"
+#include "shunting_yard.hpp"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -18,51 +19,29 @@ using namespace std;
 // Main function                                                              //
 ////////////////////////////////////////////////////////////////////////////////
 int main( int argc, char *argv[] ) {
-  StackToken st;
-  Token t1(17), t2(3);
-  const Token *pt;
+  TokenQueue infix_queue, postfix_queue;
 
-  st.push(t1); pt = &kUnaryPlus;
-  cout << (*pt) << t1 << "\t= " << (*pt)(st) << endl;
-  st.push(t2); pt = &kUnaryMinus;
-  cout << (*pt) << t2 << "\t= " << (*pt)(st) << endl;
-  st.push(t1); pt = &kLogicalNOT;
-  cout << (*pt) << t1 << "\t= " << (*pt)(st) << endl;
-  st.push(t2); pt = &kBitwiseNOT;
-  cout << (*pt) << t2 << "\t= " << (*pt)(st) << endl;
+  infix_queue.emplace(3); cout << infix_queue.back() << ' ';
+  infix_queue.push(kTokenAddition); cout << infix_queue.back() << ' ';
+  infix_queue.push(kTokenUnaryMinus); cout << infix_queue.back() << ' ';
+  infix_queue.emplace(4); cout << infix_queue.back() << ' ';
+  infix_queue.push(kTokenMultiplication); cout << infix_queue.back() << ' ';
+  infix_queue.emplace(2); cout << infix_queue.back() << ' ';
+  infix_queue.push(kTokenDivision); cout << infix_queue.back() << ' ';
+  infix_queue.push(kTokenLogicalNOT); cout << infix_queue.back() << ' ';
+  infix_queue.push(kTokenBitwiseNOT); cout << infix_queue.back() << ' ';
+  infix_queue.push(kTokenLeftParenthesis); cout << infix_queue.back() << ' ';
+  infix_queue.emplace(1); cout << infix_queue.back() << ' ';
+  infix_queue.push(kTokenSubtraction); cout << infix_queue.back() << ' ';
+  infix_queue.emplace(5); cout << infix_queue.back() << ' ';
+  infix_queue.push(kTokenRightParenthesis); cout << infix_queue.back() << endl;
+
+  ShuntingYard(infix_queue, postfix_queue);
+
+  while ( !(postfix_queue.empty()) ) {
+    cout << postfix_queue.front() << ' ';
+    postfix_queue.pop();
+  }
   cout << endl;
-
-  st.push(t1); st.push(t2); pt = &kMultiplication;
-  cout << t1 << (*pt) << t2 << "\t= " << (*pt)(st) << endl;
-  st.push(t1); st.push(t2); pt = &kDivision;
-  cout << t1 << (*pt) << t2 << "\t= " << (*pt)(st) << endl;
-  st.push(t1); st.push(t2); pt = &kModulo;
-  cout << t1 << (*pt) << t2 << "\t= " << (*pt)(st) << endl;
-  cout << endl;
-
-  st.push(t1); st.push(t2); pt = &kAddition;
-  cout << t1 << (*pt) << t2 << "\t= " << (*pt)(st) << endl;
-  st.push(t1); st.push(t2); pt = &kSubtraction;
-  cout << t1 << (*pt) << t2 << "\t= " << (*pt)(st) << endl;
-  st.push(t1); st.push(t2); pt = &kBitwiseLeftShift;
-  cout << t1 << (*pt) << t2 << "\t= " << (*pt)(st) << endl;
-  st.push(t1); st.push(t2); pt = &kBitwiseRightShift;
-  cout << t1 << (*pt) << t2 << "\t= " << (*pt)(st) << endl;
-  cout << endl;
-
-  st.push(t1); st.push(t2); pt = &kBitwiseAND;
-  cout << t1 << (*pt) << t2 << "\t= " << (*pt)(st) << endl;
-  st.push(t1); st.push(t2); pt = &kBitwiseXOR;
-  cout << t1 << (*pt) << t2 << "\t= " << (*pt)(st) << endl;
-  st.push(t1); st.push(t2); pt = &kBitwiseOR;
-  cout << t1 << (*pt) << t2 << "\t= " << (*pt)(st) << endl;
-  st.push(t1); st.push(t2); pt = &kLogicalAND;
-  cout << t1 << (*pt) << t2 << "\t= " << (*pt)(st) << endl;
-  st.push(t1); st.push(t2); pt = &kLogicalOR;
-  cout << t1 << (*pt) << t2 << "\t= " << (*pt)(st) << endl;
-
-
-
-
   return 0;
 }

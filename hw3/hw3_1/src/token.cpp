@@ -18,16 +18,17 @@ namespace hw3 {
 // Initialize a symbol token                                                  //
 //                                                                            //
 // Parameters:                                                                //
-// name:   the name                                                           //
-// name:   the precedence                                                     //
-// name:   the associativity                                                  //
-// unary:  the unary function                                                 //
-// binary: the binary function                                                //
+// name:          the name                                                    //
+// precedence:    the precedence                                              //
+// associativity: the associativity                                           //
+// unary:         the unary function                                          //
+// binary:        the binary function                                         //
 ////////////////////////////////////////////////////////////////////////////////
-Token::Token( const char* name, int8_t precedence, bool associativity,
+Token::Token( const char* name, uint8_t precedence, bool associativity,
               Unary unary, Binary binary ) {
   this->name_          = name;
   this->number_        = 0;
+  this->precedence_    = precedence;
   this->associativity_ = associativity;
   this->unary_         = unary;
   this->binary_        = binary;
@@ -41,32 +42,22 @@ Token::Token( const char* name, int8_t precedence, bool associativity,
 // number: the number                                                         //
 ////////////////////////////////////////////////////////////////////////////////
 Token::Token( int32_t number ) {
-  this->name_          = "";
+  this->name_          = "#";
   this->number_        = number;
-  this->precedence_    = -1;
+  this->precedence_    = 0x00;
   this->associativity_ = true;
   this->unary_         = NULL;
   this->binary_        = NULL;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// Get the name of this token                                                 //
+// Get the precedence of this token                                           //
 //                                                                            //
 // Return Value:                                                              //
-// the name of this token                                                     //
+// the precedence of this token                                               //
 ////////////////////////////////////////////////////////////////////////////////
-std::string Token::name() {
-  return this->name_;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-// Get the associativity of this token                                        //
-//                                                                            //
-// Return Value:                                                              //
-// the associativity of this token                                            //
-////////////////////////////////////////////////////////////////////////////////
-bool Token::associativity() {
-  return this->associativity_;
+uint8_t Token::precedence() {
+  return this->precedence_;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -78,12 +69,11 @@ bool Token::associativity() {
 // Return Value:                                                              //
 // the return value of the unary/binary function                              //
 ////////////////////////////////////////////////////////////////////////////////
-int Token::operator()( StackToken& stack ) const {
+int Token::operator()( TokenStack& stack ) const {
   if ( this->unary_ != NULL ) {
     auto x = stack.top(); stack.pop();
     return this->unary_(x.number_);
-  }
-  else {
+  } else {
     auto y = stack.top(); stack.pop();
     auto x = stack.top(); stack.pop();
     return this->binary_(x.number_, y.number_);
@@ -91,17 +81,21 @@ int Token::operator()( StackToken& stack ) const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// The smaller than operator                                                  //
+// The less than operator                                                     //
 // Uses precedence to compare                                                 //
 //                                                                            //
 // Parameters:                                                                //
 // rhs: another token object                                                  //
 //                                                                            //
 // Return Value:                                                              //
-// the whether this object is smaller or not                                  //
+// whether this object is more precedent or not                               //
 ////////////////////////////////////////////////////////////////////////////////
 bool Token::operator<( const Token& rhs ) const {
-  return (precedence_ < rhs.precedence_);
+  if ( this->associativity_ ) {
+    return (this->precedence_ < rhs.precedence_);
+  } else {
+    return (this->precedence_ <= rhs.precedence_);
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -115,8 +109,11 @@ bool Token::operator<( const Token& rhs ) const {
 // the ostream object                                                         //
 ////////////////////////////////////////////////////////////////////////////////
 std::ostream& operator<<( std::ostream& os, const Token& obj ) {
-  if ( obj.precedence_ >= 0 ) return (os << obj.name_);
-  else                        return (os << obj.number_);
+  if ( obj.precedence_ == 0 ) {
+    return (os << obj.number_);
+  } else {
+    return (os << obj.name_);
+  }
 }
 
 }
