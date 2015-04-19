@@ -18,10 +18,51 @@ using namespace std;
 // Main function                                                              //
 ////////////////////////////////////////////////////////////////////////////////
 int main( int argc, char *argv[] ) {
-  Token eight(8);
-  Token mul(kMultiplication);
-  Token div(kDivision);
+  StackToken st;
+  Token t1(17), t2(3);
+  const Token *pt;
 
-  cout << kBitwiseAND << endl;
-  cout << eight << mul << div << endl;
+  st.push(t1); pt = &kUnaryPlus;
+  cout << (*pt) << t1 << "\t= " << (*pt)(st) << endl;
+  st.push(t2); pt = &kUnaryMinus;
+  cout << (*pt) << t2 << "\t= " << (*pt)(st) << endl;
+  st.push(t1); pt = &kLogicalNOT;
+  cout << (*pt) << t1 << "\t= " << (*pt)(st) << endl;
+  st.push(t2); pt = &kBitwiseNOT;
+  cout << (*pt) << t2 << "\t= " << (*pt)(st) << endl;
+  cout << endl;
+
+  st.push(t1); st.push(t2); pt = &kMultiplication;
+  cout << t1 << (*pt) << t2 << "\t= " << (*pt)(st) << endl;
+  st.push(t1); st.push(t2); pt = &kDivision;
+  cout << t1 << (*pt) << t2 << "\t= " << (*pt)(st) << endl;
+  st.push(t1); st.push(t2); pt = &kModulo;
+  cout << t1 << (*pt) << t2 << "\t= " << (*pt)(st) << endl;
+  cout << endl;
+
+  st.push(t1); st.push(t2); pt = &kAddition;
+  cout << t1 << (*pt) << t2 << "\t= " << (*pt)(st) << endl;
+  st.push(t1); st.push(t2); pt = &kSubtraction;
+  cout << t1 << (*pt) << t2 << "\t= " << (*pt)(st) << endl;
+  st.push(t1); st.push(t2); pt = &kBitwiseLeftShift;
+  cout << t1 << (*pt) << t2 << "\t= " << (*pt)(st) << endl;
+  st.push(t1); st.push(t2); pt = &kBitwiseRightShift;
+  cout << t1 << (*pt) << t2 << "\t= " << (*pt)(st) << endl;
+  cout << endl;
+
+  st.push(t1); st.push(t2); pt = &kBitwiseAND;
+  cout << t1 << (*pt) << t2 << "\t= " << (*pt)(st) << endl;
+  st.push(t1); st.push(t2); pt = &kBitwiseXOR;
+  cout << t1 << (*pt) << t2 << "\t= " << (*pt)(st) << endl;
+  st.push(t1); st.push(t2); pt = &kBitwiseOR;
+  cout << t1 << (*pt) << t2 << "\t= " << (*pt)(st) << endl;
+  st.push(t1); st.push(t2); pt = &kLogicalAND;
+  cout << t1 << (*pt) << t2 << "\t= " << (*pt)(st) << endl;
+  st.push(t1); st.push(t2); pt = &kLogicalOR;
+  cout << t1 << (*pt) << t2 << "\t= " << (*pt)(st) << endl;
+
+
+
+
+  return 0;
 }

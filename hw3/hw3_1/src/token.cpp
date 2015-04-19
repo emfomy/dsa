@@ -29,7 +29,6 @@ Token::Token( const char* name, int8_t precedence, bool associativity,
   this->name_          = name;
   this->number_        = 0;
   this->associativity_ = associativity;
-  this->isunary_       = (unary != NULL);
   this->unary_         = unary;
   this->binary_        = binary;
 }
@@ -46,7 +45,6 @@ Token::Token( int32_t number ) {
   this->number_        = number;
   this->precedence_    = -1;
   this->associativity_ = true;
-  this->isunary_       = true;
   this->unary_         = NULL;
   this->binary_        = NULL;
 }
@@ -72,41 +70,24 @@ bool Token::associativity() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// Whether the token is unary or not                                          //
-//                                                                            //
-// Return Value:                                                              //
-// 'true'  means the token is unary                                           //
- // 'false' means the token is binary                                         //
-////////////////////////////////////////////////////////////////////////////////
-bool Token::isunary() {
-  return isunary_;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-// The unary function of this token                                           //
+// Run the unary/binary function of this token                                //
 //                                                                            //
 // Parameters:                                                                //
-// x: a number token object                                                   //
+// stack: the stack of tokens                                                 //
 //                                                                            //
 // Return Value:                                                              //
-// the return value of the unary function                                     //
+// the return value of the unary/binary function                              //
 ////////////////////////////////////////////////////////////////////////////////
-int Token::unary( const int x ) {
-  return this->unary_(x);
-}
-
-////////////////////////////////////////////////////////////////////////////////
-// The binary function of this token                                          //
-//                                                                            //
-// Parameters:                                                                //
-// x: a number token object                                                   //
-// y: a number token object                                                   //
-//                                                                            //
-// Return Value:                                                              //
-// the return value of the binary function                                    //
-////////////////////////////////////////////////////////////////////////////////
-int Token::binary( const int x, const int y ) {
-  return this->binary_(x, y);
+int Token::operator()( StackToken& stack ) const {
+  if ( this->unary_ != NULL ) {
+    auto x = stack.top(); stack.pop();
+    return this->unary_(x.number_);
+  }
+  else {
+    auto y = stack.top(); stack.pop();
+    auto x = stack.top(); stack.pop();
+    return this->binary_(x.number_, y.number_);
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////

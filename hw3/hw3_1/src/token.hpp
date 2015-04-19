@@ -12,6 +12,7 @@
 
 #include <iostream>
 #include <cstdint>
+#include <stack>
 #include "hw3.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -21,6 +22,12 @@ namespace hw3 {
 
 typedef int (*Unary)(const int);
 typedef int (*Binary)(const int, const int);
+
+////////////////////////////////////////////////////////////////////////////////
+// The stack of Token                                                         //
+////////////////////////////////////////////////////////////////////////////////
+class Token;
+typedef std::stack<Token> StackToken;
 
 ////////////////////////////////////////////////////////////////////////////////
 // The class of a token                                                       //
@@ -45,11 +52,6 @@ class Token
   // 'false' means the token is right-to-left.
   bool associativity_;
 
-  // Whether the token is unary or not.
-  // 'true'  means the token is unary.
-  // 'false' means the token is binary.
-  bool isunary_;
-
   // The unary operator
   Unary unary_;
 
@@ -62,11 +64,8 @@ class Token
 
   std::string name();
   bool associativity();
-  bool isunary();
 
-  int unary( const int );
-  int binary( const int, const int );
-
+  int operator()( StackToken& ) const;
   bool operator<( const Token& ) const;
   friend std::ostream& operator<<( std::ostream&, const Token& );
 };
@@ -93,7 +92,7 @@ const Token kMultiplication =
 const Token kDivision =
     Token("/" , 5,  true, NULL, [](int x, int y)->int{return (x / y);});
 const Token kModulo =
-    Token("%%", 5,  true, NULL, [](int x, int y)->int{return (x % y);});
+    Token("%" , 5,  true, NULL, [](int x, int y)->int{return (x % y);});
 // Level six
 const Token kAddition =
     Token("+" , 6,  true, NULL, [](int x, int y)->int{return (x + y);});
@@ -118,6 +117,7 @@ const Token kLogicalAND =
 // Level fourteen
 const Token kLogicalOR =
     Token("||", 14, true, NULL, [](int x, int y)->int{return (x || y);});
+
 }
 
 #endif
