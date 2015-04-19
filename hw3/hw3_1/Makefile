@@ -5,9 +5,12 @@ TARGETS = hw3_1
 
 OBJECTS = \
 	src/hw3_1.o \
+	src/token.o \
 
 HEADERS = \
+	src/hw3.hpp \
 	src/hw3_1.hpp \
+	src/token.hpp \
 
 all: $(TARGETS)
 
