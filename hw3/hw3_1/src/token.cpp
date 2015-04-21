@@ -15,28 +15,65 @@ namespace hw3 {
 
 ////////////////////////////////////////////////////////////////////////////////
 // The constructor of Token                                                   //
-// Initialize a symbol token                                                  //
+// Initialize a symbolic token                                                //
+//                                                                            //
+// Parameters:                                                                //
+// name:          the name                                                    //
+// precedence:    the precedence                                              //
+// associativity: the associativity                                           //
+////////////////////////////////////////////////////////////////////////////////
+Token::Token( const char* name, Type precedence, bool associativity ) {
+  this->name_          = name;
+  this->number_        = 0;
+  this->precedence_    = precedence;
+  this->associativity_ = associativity;
+  this->unary_         = NULL;
+  this->binary_        = NULL;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// The constructor of Token                                                   //
+// Initialize a unary token                                                   //
 //                                                                            //
 // Parameters:                                                                //
 // name:          the name                                                    //
 // precedence:    the precedence                                              //
 // associativity: the associativity                                           //
 // unary:         the unary function                                          //
-// binary:        the binary function                                         //
 ////////////////////////////////////////////////////////////////////////////////
-Token::Token( const char* name, Type precedence, bool associativity,
-              Unary unary, Binary binary ) {
+Token::Token( const char* name, Type precedence,
+              bool associativity, Unary unary ) {
   this->name_          = name;
   this->number_        = 0;
   this->precedence_    = precedence;
   this->associativity_ = associativity;
   this->unary_         = unary;
+  this->binary_        = NULL;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// The constructor of Token                                                   //
+// Initialize a binary token                                                  //
+//                                                                            //
+// Parameters:                                                                //
+// name:          the name                                                    //
+// precedence:    the precedence                                              //
+// associativity: the associativity                                           //
+// binary:        the binary function                                         //
+////////////////////////////////////////////////////////////////////////////////
+Token::Token( const char* name, Type precedence,
+              bool associativity, Binary binary ) {
+  this->name_          = name;
+  this->number_        = 0;
+  this->precedence_    = precedence;
+  this->associativity_ = associativity;
+  this->unary_         = NULL;
   this->binary_        = binary;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // The constructor of Token                                                   //
-// Initialize a number token                                                  //
+// Initialize a numerical token                                               //
 //                                                                            //
 // Parameters:                                                                //
 // number: the number                                                         //
@@ -69,16 +106,17 @@ Type Token::precedence() {
 // Output Parameters:                                                         //
 // stack: the stack after running the unary/binary function                   //
 ////////////////////////////////////////////////////////////////////////////////
-void Token::operator()( TokenStack& stack ) const {
+void Token::operator()( TokenStack& stack ) {
   if ( this->unary_ != NULL ) {
-    auto& x = stack.top();
-    x.number_ = this->unary_(x.number_);
+    auto px = stack.top();
+    px->number_ = this->unary_(px->number_);
   } else if ( this->binary_ != NULL ) {
-    auto& y = stack.top(); stack.pop();
-    auto& x = stack.top();
-    x.number_ = this->binary_(x.number_, y.number_);
+    auto py = stack.top(); stack.pop();
+    auto px = stack.top();
+    px->number_ = this->binary_(px->number_, py->number_);
+    delete py;
   } else {
-    stack.push(*this);
+    stack.push(this);
   }
 }
 

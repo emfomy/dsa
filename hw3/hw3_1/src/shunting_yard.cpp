@@ -30,47 +30,47 @@ void ShuntingYard( TokenQueue& infix_queue,
 
   // Pop tokens from input queue
   while ( !infix_queue.empty() ) {
-    auto& token1 = infix_queue.front();
+    auto& token1 = *infix_queue.front();
     infix_queue.pop();
     switch (token1.precedence()) {
-      case 0x00: { // Number tokens
-        postfix_queue.push(token1);
+      case 0x00: { // Numerical tokens
+        postfix_queue.push(&token1);
         break;
       }
       case 0xFF: { // Left parenthesis token
-        operator_stack.push(token1);
+        operator_stack.push(&token1);
         break;
       }
       case 0xFE: { // Right parenthesis token
         while ( !(operator_stack.empty()) ) {
-          auto& token2 = operator_stack.top();
+          auto& token2 = *operator_stack.top();
           operator_stack.pop();
           if ( token2.precedence() == 0xFF ) {
             break;
           }
-          postfix_queue.push(token2);
+          postfix_queue.push(&token2);
         }
         break;
       }
       default: { // Other tokens
         while ( !(operator_stack.empty()) ) {
-          auto& token2 = operator_stack.top();
+          auto& token2 = *operator_stack.top();
           if ( token1 < token2 ) {
             break;
           }
           operator_stack.pop();
-          postfix_queue.push(token2);
+          postfix_queue.push(&token2);
         }
-        operator_stack.push(token1);
+        operator_stack.push(&token1);
       }
     }
   }
 
   // Pop tokens from operator stack
   while ( !(operator_stack.empty()) ) {
-    auto& token2 = operator_stack.top();
+    auto& token2 = *operator_stack.top();
     operator_stack.pop();
-    postfix_queue.push(token2);
+    postfix_queue.push(&token2);
   }
 }
 

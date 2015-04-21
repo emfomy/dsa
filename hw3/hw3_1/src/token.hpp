@@ -28,8 +28,8 @@ typedef Number (*Binary)(const Number, const Number);
 // The queue and stack of Token                                               //
 ////////////////////////////////////////////////////////////////////////////////
 class Token;
-typedef std::queue<Token> TokenQueue;
-typedef std::stack<Token> TokenStack;
+typedef std::queue<Token*> TokenQueue;
+typedef std::stack<Token*> TokenStack;
 
 ////////////////////////////////////////////////////////////////////////////////
 // The class of a token                                                       //
@@ -42,7 +42,7 @@ class Token
   std::string name_;
 
   // The number of this token.
-  // '0' for non-numeric tokens.
+  // '0' for non-numerical tokens.
   Number number_;
 
   // The precedence of this token.
@@ -63,75 +63,81 @@ class Token
   Binary binary_;
 
  public:
-  Token( const char*, Type, bool, Unary, Binary );
+  Token( const char*, Type, bool );
+  Token( const char*, Type, bool, Unary );
+  Token( const char*, Type, bool, Binary );
   Token( Number );
 
   Type precedence();
 
-  void operator()( TokenStack& ) const;
+  void operator()( TokenStack& );
   bool operator<( const Token& ) const;
   friend std::ostream& operator<<( std::ostream&, const Token& );
 };
 
 ////////////////////////////////////////////////////////////////////////////////
-// Non-numeric tokens                                                         //
+// Non-numerical tokens                                                       //
 ////////////////////////////////////////////////////////////////////////////////
-const Token kTokenLeftParenthesis =
-    Token("(" , 0xFF, true, NULL, NULL);
-const Token kTokenRightParenthesis =
-    Token(")" , 0xFE, true, NULL, NULL);
+static Token* pTokenLeftParenthesis =
+    new Token("(" , 0xFF, true);
+static Token* pTokenRightParenthesis =
+    new Token(")" , 0xFE, true);
 // Level three
-const Token kTokenUnaryPlus =
-    Token("+" , 0x03, false, [](Number x)->Number{return (+x);}, NULL);
-const Token kTokenUnaryMinus =
-    Token("-" , 0x03, false, [](Number x)->Number{return (-x);}, NULL);
-const Token kTokenLogicalNOT =
-    Token("!" , 0x03, false, [](Number x)->Number{return (!x);}, NULL);
-const Token kTokenBitwiseNOT =
-    Token("~" , 0x03, false, [](Number x)->Number{return (~x);}, NULL);
+static Token* pTokenUnaryPlus =
+    new Token("+" , 0x03, false,
+              [](Number x)->Number{return (+x);});
+static Token* pTokenUnaryMinus =
+    new Token("-" , 0x03, false,
+              [](Number x)->Number{return (-x);});
+static Token* pTokenLogicalNOT =
+    new Token("!" , 0x03, false,
+              [](Number x)->Number{return (!x);});
+static Token* pTokenBitwiseNOT =
+    new Token("~" , 0x03, false,
+              [](Number x)->Number{return (~x);});
 // Level five
-const Token kTokenMultiplication =
-    Token("*" , 0x05, true, NULL,
-          [](Number x, Number y)->Number{return (x * y);});
-const Token kTokenDivision =
-    Token("/" , 0x05, true, NULL,
-          [](Number x, Number y)->Number{return (x / y);});
-const Token kTokenModulo =
-    Token("%" , 0x05, true, NULL,
-          [](Number x, Number y)->Number{return (x % y);});
+static Token* pTokenMultiplication =
+    new Token("*" , 0x05, true,
+              [](Number x, Number y)->Number{return (x * y);});
+static Token* pTokenDivision =
+    new Token("/" , 0x05, true,
+              [](Number x, Number y)->Number{return (x / y);});
+static Token* pTokenModulo =
+    new Token("%" , 0x05, true,
+              [](Number x, Number y)->Number{return (x % y);});
 // Level six
-const Token kTokenAddition =
-    Token("+" , 0x06, true, NULL,
-          [](Number x, Number y)->Number{return (x + y);});
-const Token kTokenSubtraction =
-    Token("-" , 0x06, true, NULL,
-          [](Number x, Number y)->Number{return (x - y);});
-const Token kTokenBitwiseLeftShift =
-    Token("<<", 0x06, true, NULL,
-          [](Number x, Number y)->Number{return (x << y);});
-const Token kTokenBitwiseRightShift =
-    Token(">>", 0x06, true, NULL,
-          [](Number x, Number y)->Number{return (x >> y);});
+static Token* pTokenAddition =
+    new Token("+" , 0x06, true,
+              [](Number x, Number y)->Number{return (x + y);});
+static Token* pTokenSubtraction =
+    new Token("-" , 0x06, true,
+              [](Number x, Number y)->Number{return (x - y);});
+static Token* pTokenBitwiseLeftShift =
+    new Token("<<", 0x06, true,
+              [](Number x, Number y)->Number{return (x << y);});
+static Token* pTokenBitwiseRightShift =
+    new Token(">>", 0x06, true,
+              [](Number x, Number y)->Number{return (x >> y);});
 // Level ten
-const Token kTokenBitwiseAND =
-    Token("&" , 0x0A, true, NULL,
-          [](Number x, Number y)->Number{return (x & y);});
+static Token* pTokenBitwiseAND =
+    new Token("&" , 0x0A, true,
+              [](Number x, Number y)->Number{return (x & y);});
 // Level eleven
-const Token kTokenBitwiseXOR =
-    Token("^" , 0x0B, true, NULL,
-          [](Number x, Number y)->Number{return (x ^ y);});
+static Token* pTokenBitwiseXOR =
+    new Token("^" , 0x0B, true,
+              [](Number x, Number y)->Number{return (x ^ y);});
 // Level twelve
-const Token kTokenBitwiseOR =
-    Token("|" , 0x0C, true, NULL,
-          [](Number x, Number y)->Number{return (x | y);});
+static Token* pTokenBitwiseOR =
+    new Token("|" , 0x0C, true,
+              [](Number x, Number y)->Number{return (x | y);});
 // Level thirteen
-const Token kTokenLogicalAND =
-    Token("&&", 0x0D, true, NULL,
-          [](Number x, Number y)->Number{return (x && y);});
+static Token* pTokenLogicalAND =
+    new Token("&&", 0x0D, true,
+              [](Number x, Number y)->Number{return (x && y);});
 // Level fourteen
-const Token kTokenLogicalOR =
-    Token("||", 0x0E, true, NULL,
-          [](Number x, Number y)->Number{return (x || y);});
+static Token* pTokenLogicalOR =
+    new Token("||", 0x0E, true,
+              [](Number x, Number y)->Number{return (x || y);});
 
 }
 

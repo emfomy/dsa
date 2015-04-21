@@ -23,22 +23,26 @@ int main( int argc, char *argv[] ) {
   TokenQueue infix_queue, postfix_queue;
   TokenStack stack;
 
-  infix_queue.emplace(3); cout << infix_queue.back() << ' ';
-  infix_queue.push(kTokenAddition); cout << infix_queue.back() << ' ';
-  infix_queue.push(kTokenUnaryMinus); cout << infix_queue.back() << ' ';
-  infix_queue.emplace(4); cout << infix_queue.back() << ' ';
-  infix_queue.push(kTokenMultiplication); cout << infix_queue.back() << ' ';
-  infix_queue.emplace(2); cout << infix_queue.back() << ' ';
-  infix_queue.push(kTokenDivision); cout << infix_queue.back() << ' ';
-  infix_queue.push(kTokenLeftParenthesis); cout << infix_queue.back() << ' ';
-  infix_queue.emplace(1); cout << infix_queue.back() << ' ';
-  infix_queue.push(kTokenSubtraction); cout << infix_queue.back() << ' ';
-  infix_queue.emplace(5); cout << infix_queue.back() << ' ';
-  infix_queue.push(kTokenRightParenthesis); cout << infix_queue.back() << endl;
+  infix_queue.push(pTokenBitwiseNOT); cout << *infix_queue.back() << ' ';
+  infix_queue.push(pTokenBitwiseNOT); cout << *infix_queue.back() << ' ';
+  infix_queue.push(pTokenBitwiseNOT); cout << *infix_queue.back() << ' ';
+  infix_queue.push(new Token(3)); cout << *infix_queue.back() << ' ';
+  infix_queue.push(pTokenAddition); cout << *infix_queue.back() << ' ';
+  infix_queue.push(pTokenUnaryMinus); cout << *infix_queue.back() << ' ';
+  infix_queue.push(new Token(4)); cout << *infix_queue.back() << ' ';
+  infix_queue.push(pTokenMultiplication); cout << *infix_queue.back() << ' ';
+  infix_queue.push(new Token(2)); cout << *infix_queue.back() << ' ';
+  infix_queue.push(pTokenDivision); cout << *infix_queue.back() << ' ';
+  infix_queue.push(pTokenLeftParenthesis); cout << *infix_queue.back() << ' ';
+  infix_queue.push(new Token(1)); cout << *infix_queue.back() << ' ';
+  infix_queue.push(pTokenSubtraction); cout << *infix_queue.back() << ' ';
+  infix_queue.push(pTokenUnaryPlus); cout << *infix_queue.back() << ' ';
+  infix_queue.push(new Token(5)); cout << *infix_queue.back() << ' ';
+  infix_queue.push(pTokenRightParenthesis); cout << *infix_queue.back() << endl;
 
   ShuntingYard(infix_queue, stack, postfix_queue);
   EvaluatePostfix(postfix_queue, stack);
-  cout << stack.top() << endl;
+  cout << *stack.top() << endl;
 
   return 0;
 }

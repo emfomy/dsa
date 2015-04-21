@@ -7,7 +7,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "evaluate_postfix.hpp"
-#include "token.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////
 // The namespace hw3                                                          //
@@ -26,8 +25,8 @@ namespace hw3 {
 ////////////////////////////////////////////////////////////////////////////////
 void EvaluatePostfix( TokenQueue& postfix_queue, TokenStack& number_stack ) {
   while ( !postfix_queue.empty() ) {
-    auto& token1 = postfix_queue.front();
-    token1(number_stack);
+    auto& token = *postfix_queue.front();
+    token(number_stack);
     postfix_queue.pop();
   }
 }
