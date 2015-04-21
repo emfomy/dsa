@@ -7,12 +7,14 @@ OBJECTS = \
 	src/hw3_1.o \
 	src/token.o \
 	src/shunting_yard.o \
+	src/evaluate_postfix.o \
 
 HEADERS = \
 	src/hw3.hpp \
 	src/hw3_1.hpp \
 	src/token.hpp \
 	src/shunting_yard.hpp \
+	src/evaluate_postfix.hpp \
 
 all: $(TARGETS)
 

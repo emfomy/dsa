@@ -18,21 +18,21 @@ namespace hw3 {
 // Convert infix expressions to postfix expressions                           //
 //                                                                            //
 // Input Parameters:                                                          //
-// input_queue: the queue with infix expressions, will be cleared             //
+// infix_queue: the queue with infix expressions, will be cleared             //
 //                                                                            //
 // Output Parameters:                                                         //
-// output_queue: an empty queue, will be filled by postfix expressions        //
+// postfix_queue: an empty queue, will be filled by postfix expressions       //
 ////////////////////////////////////////////////////////////////////////////////
-void ShuntingYard( TokenQueue& input_queue, TokenQueue& output_queue ) {
+void ShuntingYard( TokenQueue& infix_queue, TokenQueue& postfix_queue ) {
   TokenStack operator_stack;
 
   // Pop tokens from input queue
-  while ( !input_queue.empty() ) {
-    auto& token1 = input_queue.front();
-    input_queue.pop();
+  while ( !infix_queue.empty() ) {
+    auto& token1 = infix_queue.front();
+    infix_queue.pop();
     switch (token1.precedence()) {
-      case 0: { // Number tokens
-        output_queue.push(token1);
+      case 0x00: { // Number tokens
+        postfix_queue.push(token1);
         break;
       }
       case 0xFF: { // Left parenthesis token
@@ -46,7 +46,7 @@ void ShuntingYard( TokenQueue& input_queue, TokenQueue& output_queue ) {
           if ( token2.precedence() == 0xFF ) {
             break;
           }
-          output_queue.push(token2);
+          postfix_queue.push(token2);
         }
         break;
       }
@@ -57,7 +57,7 @@ void ShuntingYard( TokenQueue& input_queue, TokenQueue& output_queue ) {
             break;
           }
           operator_stack.pop();
-          output_queue.push(token2);
+          postfix_queue.push(token2);
         }
         operator_stack.push(token1);
       }
@@ -68,7 +68,7 @@ void ShuntingYard( TokenQueue& input_queue, TokenQueue& output_queue ) {
   while ( !(operator_stack.empty()) ) {
     auto& token2 = operator_stack.top();
     operator_stack.pop();
-    output_queue.push(token2);
+    postfix_queue.push(token2);
   }
 }
 

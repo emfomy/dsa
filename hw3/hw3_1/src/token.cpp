@@ -24,7 +24,7 @@ namespace hw3 {
 // unary:         the unary function                                          //
 // binary:        the binary function                                         //
 ////////////////////////////////////////////////////////////////////////////////
-Token::Token( const char* name, uint8_t precedence, bool associativity,
+Token::Token( const char* name, Type precedence, bool associativity,
               Unary unary, Binary binary ) {
   this->name_          = name;
   this->number_        = 0;
@@ -41,7 +41,7 @@ Token::Token( const char* name, uint8_t precedence, bool associativity,
 // Parameters:                                                                //
 // number: the number                                                         //
 ////////////////////////////////////////////////////////////////////////////////
-Token::Token( int32_t number ) {
+Token::Token( Number number ) {
   this->name_          = "#";
   this->number_        = number;
   this->precedence_    = 0x00;
@@ -56,27 +56,29 @@ Token::Token( int32_t number ) {
 // Return Value:                                                              //
 // the precedence of this token                                               //
 ////////////////////////////////////////////////////////////////////////////////
-uint8_t Token::precedence() {
+Type Token::precedence() {
   return this->precedence_;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Run the unary/binary function of this token                                //
 //                                                                            //
-// Parameters:                                                                //
+// Input Parameters:                                                          //
 // stack: the stack of tokens                                                 //
 //                                                                            //
-// Return Value:                                                              //
-// the return value of the unary/binary function                              //
+// Output Parameters:                                                         //
+// stack: the stack after running the unary/binary function                   //
 ////////////////////////////////////////////////////////////////////////////////
-int Token::operator()( TokenStack& stack ) const {
+void Token::operator()( TokenStack& stack ) const {
   if ( this->unary_ != NULL ) {
-    auto x = stack.top(); stack.pop();
-    return this->unary_(x.number_);
+    auto& x = stack.top();
+    x.number_ = this->unary_(x.number_);
+  } else if ( this->binary_ != NULL ) {
+    auto& y = stack.top(); stack.pop();
+    auto& x = stack.top();
+    x.number_ = this->binary_(x.number_, y.number_);
   } else {
-    auto y = stack.top(); stack.pop();
-    auto x = stack.top(); stack.pop();
-    return this->binary_(x.number_, y.number_);
+    stack.push(*this);
   }
 }
 

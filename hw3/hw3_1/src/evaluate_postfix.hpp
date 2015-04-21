@@ -1,17 +1,18 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Data Structures and Algorithms - Homework 3-1                              //
-// hw3.hpp                                                                    //
-// The header file of namespace hw3                                           //
+// evaluate_postfix.hpp                                                       //
+// The header file of postfix algorithm                                       //
 //                                                                            //
 // Author: emfo<emfomy@gmail.com>                                             //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef HW3_1_HW3_HPP_
+#ifndef HW3_1_EVALUATE_POSTFIX_HPP_
 
-#define HW3_1_HW3_HPP_
+#define HW3_1_EVALUATE_POSTFIX_HPP_
 
-#include <cstdint>
-#include <stack>
+#include <string>
+#include "hw3.hpp"
+#include "token.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////
 // The namespace hw3                                                          //
@@ -19,10 +20,9 @@
 namespace hw3 {
 
 ////////////////////////////////////////////////////////////////////////////////
-// Base types                                                                 //
+// The postfix algorithm                                                      //
 ////////////////////////////////////////////////////////////////////////////////
-typedef int32_t Number;
-typedef uint8_t Type;
+Token EvaluatePostfix( TokenQueue& );
 
 }
 

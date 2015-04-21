@@ -9,6 +9,7 @@
 #include "hw3_1.hpp"
 #include "token.hpp"
 #include "shunting_yard.hpp"
+#include "evaluate_postfix.hpp"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -28,8 +29,6 @@ int main( int argc, char *argv[] ) {
   infix_queue.push(kTokenMultiplication); cout << infix_queue.back() << ' ';
   infix_queue.emplace(2); cout << infix_queue.back() << ' ';
   infix_queue.push(kTokenDivision); cout << infix_queue.back() << ' ';
-  infix_queue.push(kTokenLogicalNOT); cout << infix_queue.back() << ' ';
-  infix_queue.push(kTokenBitwiseNOT); cout << infix_queue.back() << ' ';
   infix_queue.push(kTokenLeftParenthesis); cout << infix_queue.back() << ' ';
   infix_queue.emplace(1); cout << infix_queue.back() << ' ';
   infix_queue.push(kTokenSubtraction); cout << infix_queue.back() << ' ';
@@ -38,10 +37,8 @@ int main( int argc, char *argv[] ) {
 
   ShuntingYard(infix_queue, postfix_queue);
 
-  while ( !(postfix_queue.empty()) ) {
-    cout << postfix_queue.front() << ' ';
-    postfix_queue.pop();
-  }
-  cout << endl;
+  auto token = EvaluatePostfix(postfix_queue);
+  cout << token << endl;
+
   return 0;
 }
