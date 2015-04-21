@@ -18,13 +18,15 @@ namespace hw3 {
 // Convert infix expressions to postfix expressions                           //
 //                                                                            //
 // Input Parameters:                                                          //
-// infix_queue: the queue with infix expressions, will be cleared             //
+// infix_queue:    the queue with infix expressions, will be cleared          //
+// operator_stack: an empty stack used as workspace                           //
 //                                                                            //
 // Output Parameters:                                                         //
-// postfix_queue: an empty queue, will be filled by postfix expressions       //
+// postfix_queue:  an empty queue, overwritten by postfix expressions         //
 ////////////////////////////////////////////////////////////////////////////////
-void ShuntingYard( TokenQueue& infix_queue, TokenQueue& postfix_queue ) {
-  TokenStack operator_stack;
+void ShuntingYard( TokenQueue& infix_queue,
+                   TokenStack& operator_stack,
+                   TokenQueue& postfix_queue ) {
 
   // Pop tokens from input queue
   while ( !infix_queue.empty() ) {

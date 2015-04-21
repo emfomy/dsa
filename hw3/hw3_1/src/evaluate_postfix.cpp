@@ -18,21 +18,18 @@ namespace hw3 {
 // The postfix algorithm                                                      //
 // Evaluating postfix expressions                                             //
 //                                                                            //
-// Parameters:                                                                //
+// Input Parameters:                                                          //
 // postfix_queue: the queue with postfix expressions, will be cleared         //
 //                                                                            //
-// Return Value:                                                              //
-// the number token of the result of postfix expressions                      //
+// Output Parameters:                                                         //
+// number_stack:  overwritten by evaluating result                            //
 ////////////////////////////////////////////////////////////////////////////////
-Token EvaluatePostfix( TokenQueue& postfix_queue ) {
-  TokenStack number_stack;
-
+void EvaluatePostfix( TokenQueue& postfix_queue, TokenStack& number_stack ) {
   while ( !postfix_queue.empty() ) {
     auto& token1 = postfix_queue.front();
     token1(number_stack);
     postfix_queue.pop();
   }
-  return number_stack.top();
 }
 
 }

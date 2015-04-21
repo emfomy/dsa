@@ -38,7 +38,7 @@ class Token
 {
  private:
   // The name of this token.
-  // "#" this token is a number.
+  // "#" means this token is a number.
   std::string name_;
 
   // The number of this token.

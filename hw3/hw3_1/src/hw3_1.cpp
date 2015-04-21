@@ -21,6 +21,7 @@ using namespace std;
 ////////////////////////////////////////////////////////////////////////////////
 int main( int argc, char *argv[] ) {
   TokenQueue infix_queue, postfix_queue;
+  TokenStack stack;
 
   infix_queue.emplace(3); cout << infix_queue.back() << ' ';
   infix_queue.push(kTokenAddition); cout << infix_queue.back() << ' ';
@@ -35,10 +36,9 @@ int main( int argc, char *argv[] ) {
   infix_queue.emplace(5); cout << infix_queue.back() << ' ';
   infix_queue.push(kTokenRightParenthesis); cout << infix_queue.back() << endl;
 
-  ShuntingYard(infix_queue, postfix_queue);
-
-  auto token = EvaluatePostfix(postfix_queue);
-  cout << token << endl;
+  ShuntingYard(infix_queue, stack, postfix_queue);
+  EvaluatePostfix(postfix_queue, stack);
+  cout << stack.top() << endl;
 
   return 0;
 }
