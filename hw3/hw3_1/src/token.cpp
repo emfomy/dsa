@@ -7,6 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "token.hpp"
+#include "token_stack.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////
 // The namespace hw3                                                          //
@@ -139,20 +140,20 @@ bool Token::operator<( const Token& rhs ) const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// Insert into stream                                                         //
+// Insert a token object into stream                                          //
 //                                                                            //
 // Parameters:                                                                //
 // os:  the ostream object                                                    //
-// obj: the token object to be inserted into the stream                       //
+// token: the token object to be inserted into the stream                     //
 //                                                                            //
 // Return Value:                                                              //
 // the ostream object                                                         //
 ////////////////////////////////////////////////////////////////////////////////
-std::ostream& operator<<( std::ostream& os, const Token& obj ) {
-  if ( obj.precedence_ == 0 ) {
-    return (os << obj.number_);
+std::ostream& operator<<( std::ostream& os, const Token& token ) {
+  if ( token.precedence_ == 0 ) {
+    return (os << token.number_);
   } else {
-    return (os << obj.name_);
+    return (os << token.name_);
   }
 }
 

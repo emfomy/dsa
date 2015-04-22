@@ -11,8 +11,6 @@
 #define HW3_1_TOKEN_HPP_
 
 #include <iostream>
-#include <queue>
-#include <stack>
 #include <string>
 #include "hw3.hpp"
 
@@ -23,13 +21,6 @@ namespace hw3 {
 
 typedef Number (*Unary)(const Number);
 typedef Number (*Binary)(const Number, const Number);
-
-////////////////////////////////////////////////////////////////////////////////
-// The queue and stack of Token                                               //
-////////////////////////////////////////////////////////////////////////////////
-class Token;
-typedef std::queue<Token*> TokenQueue;
-typedef std::stack<Token*> TokenStack;
 
 ////////////////////////////////////////////////////////////////////////////////
 // The class of a token                                                       //
