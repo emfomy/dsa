@@ -11,7 +11,6 @@
 #define HW3_1_TOKEN_HPP_
 
 #include <iostream>
-#include <string>
 #include "hw3.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -30,7 +29,7 @@ class Token
  private:
   // The name of this token.
   // "#" means this token is a number.
-  std::string name_;
+  const char* name_;
 
   // The number of this token.
   // '0' for non-numerical tokens.
@@ -54,12 +53,14 @@ class Token
   Binary binary_;
 
  public:
-  Token( const char*, Type, bool );
-  Token( const char*, Type, bool, Unary );
-  Token( const char*, Type, bool, Binary );
+  Token( const char*, const Type );
+  Token( const char*, const Type, const bool, const Unary );
+  Token( const char*, const Type, const bool, const Binary );
   Token( Number );
 
   Type precedence();
+
+  void InsertNumber( const Number );
 
   void operator()( TokenStack& );
   bool operator<( const Token& ) const;
@@ -70,9 +71,9 @@ class Token
 // Non-numerical tokens                                                       //
 ////////////////////////////////////////////////////////////////////////////////
 static Token* pTokenLeftParenthesis =
-    new Token("(" , 0xFF, true);
+    new Token("(" , 0xFF);
 static Token* pTokenRightParenthesis =
-    new Token(")" , 0xFE, true);
+    new Token(")" , 0xFE);
 // Level three
 static Token* pTokenUnaryPlus =
     new Token("+" , 0x03, false,

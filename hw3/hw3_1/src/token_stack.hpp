@@ -12,6 +12,7 @@
 
 #include <iostream>
 #include "hw3.hpp"
+#include "token.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////
 // The namespace hw3                                                          //

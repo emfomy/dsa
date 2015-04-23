@@ -12,6 +12,7 @@
 
 #include <iostream>
 #include "hw3.hpp"
+#include "token.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////
 // The namespace hw3                                                          //
@@ -23,6 +24,7 @@ namespace hw3 {
 ////////////////////////////////////////////////////////////////////////////////
 typedef std::queue<Token*> TokenQueue;
 std::ostream& operator<<( std::ostream&, TokenQueue& );
+void InsertToken( TokenQueue&, const char* );
 
 }
 

@@ -10,7 +10,6 @@
 
 #define HW3_1_SHUNTING_YARD_HPP_
 
-#include <string>
 #include "hw3.hpp"
 #include "token.hpp"
 

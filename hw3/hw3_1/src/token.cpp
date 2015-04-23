@@ -21,13 +21,12 @@ namespace hw3 {
 // Parameters:                                                                //
 // name:          the name                                                    //
 // precedence:    the precedence                                              //
-// associativity: the associativity                                           //
 ////////////////////////////////////////////////////////////////////////////////
-Token::Token( const char* name, Type precedence, bool associativity ) {
+Token::Token( const char* name, const Type precedence ) {
   this->name_          = name;
   this->number_        = 0;
   this->precedence_    = precedence;
-  this->associativity_ = associativity;
+  this->associativity_ = true;
   this->unary_         = NULL;
   this->binary_        = NULL;
 }
@@ -42,8 +41,8 @@ Token::Token( const char* name, Type precedence, bool associativity ) {
 // associativity: the associativity                                           //
 // unary:         the unary function                                          //
 ////////////////////////////////////////////////////////////////////////////////
-Token::Token( const char* name, Type precedence,
-              bool associativity, Unary unary ) {
+Token::Token( const char* name, const Type precedence,
+              const bool associativity, const Unary unary ) {
   this->name_          = name;
   this->number_        = 0;
   this->precedence_    = precedence;
@@ -62,8 +61,8 @@ Token::Token( const char* name, Type precedence,
 // associativity: the associativity                                           //
 // binary:        the binary function                                         //
 ////////////////////////////////////////////////////////////////////////////////
-Token::Token( const char* name, Type precedence,
-              bool associativity, Binary binary ) {
+Token::Token( const char* name, const Type precedence,
+              const bool associativity, const Binary binary ) {
   this->name_          = name;
   this->number_        = 0;
   this->precedence_    = precedence;
@@ -79,7 +78,7 @@ Token::Token( const char* name, Type precedence,
 // Parameters:                                                                //
 // number: the number                                                         //
 ////////////////////////////////////////////////////////////////////////////////
-Token::Token( Number number ) {
+Token::Token( const Number number ) {
   this->name_          = "#";
   this->number_        = number;
   this->precedence_    = 0x00;
@@ -96,6 +95,14 @@ Token::Token( Number number ) {
 ////////////////////////////////////////////////////////////////////////////////
 Type Token::precedence() {
   return this->precedence_;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Insert a number at the end of this number Token                            //
+// multiply the this number by ten and added by the new number                //
+////////////////////////////////////////////////////////////////////////////////
+void Token::InsertNumber( const Number number ) {
+  this->number_ = this->number_*10 + number;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
