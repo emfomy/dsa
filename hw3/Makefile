@@ -14,7 +14,7 @@ clean:
 	done
 
 run1:
-	./hw3_1/hw3_1 < ./input > ./output
+	./3_4_1.out < ./input > ./output
 
 run2:
-	./hw3_2/hw3_2 < ./input > ./output
+	./3_4_2.out < ./input > ./output
