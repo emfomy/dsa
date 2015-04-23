@@ -13,7 +13,6 @@ OBJECTS = \
 
 HEADERS = \
 	src/hw3.hpp \
-	src/hw3_2.hpp \
 	src/token.hpp \
 	src/token_queue.hpp \
 	src/token_stack.hpp \
