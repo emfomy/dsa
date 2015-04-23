@@ -37,11 +37,11 @@ void ShuntingYard( TokenQueue& infix_queue,
         postfix_queue.push(&token1);
         break;
       }
-      case 0xFF: { // Left parenthesis token
+      case 0xFF: { // Left parenthesis tokens
         operator_stack.push(&token1);
         break;
       }
-      case 0xFE: { // Right parenthesis token
+      case 0xFE: { // Right parenthesis tokens
         while ( !(operator_stack.empty()) ) {
           auto& token2 = *operator_stack.top();
           operator_stack.pop();
@@ -52,7 +52,7 @@ void ShuntingYard( TokenQueue& infix_queue,
         }
         break;
       }
-      default: { // Other tokens
+      default: { // Operator tokens
         while ( !(operator_stack.empty()) ) {
           auto& token2 = *operator_stack.top();
           if ( token1 < token2 ) {

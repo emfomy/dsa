@@ -37,11 +37,11 @@ void ShuntingYard( TokenQueue& infix_queue,
         postfix_queue.push(&token1);
         break;
       }
-      case 0xFF: { // Left parenthesis token
+      case 0xFF: { // Left parenthesis tokens
         operator_stack.push(&token1);
         break;
       }
-      case 0xFE: { // Right parenthesis token
+      case 0xFE: { // Right parenthesis tokens
         while ( !(operator_stack.empty()) ) {
           auto& token2 = *operator_stack.top();
           operator_stack.pop();
@@ -50,9 +50,29 @@ void ShuntingYard( TokenQueue& infix_queue,
           }
           postfix_queue.push(&token2);
         }
+        auto& token2 = *operator_stack.top();
+        if ( token2.precedence() == 0xFC ) {
+          operator_stack.pop();
+          postfix_queue.push(&token2);
+        }
         break;
       }
-      default: { // Other tokens
+      case 0xFD: { // Comma tokens
+        while ( !(operator_stack.empty()) ) {
+          auto& token2 = *operator_stack.top();
+          if ( token2.precedence() == 0xFF ) {
+            break;
+          }
+          operator_stack.pop();
+          postfix_queue.push(&token2);
+        }
+        break;
+      }
+      case 0xFC: { // Function tokens
+        operator_stack.push(&token1);
+        break;
+      }
+      default: { // Operator tokens
         while ( !(operator_stack.empty()) ) {
           auto& token2 = *operator_stack.top();
           if ( token1 < token2 ) {
