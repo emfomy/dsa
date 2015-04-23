@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////
-// Data Structures and Algorithms - Homework 3-1                              //
+// Data Structures and Algorithms - Homework 3-2                              //
 // token_queue.cpp                                                            //
 // The class TokenQueue                                                       //
 //                                                                            //
@@ -58,6 +58,7 @@ void InsertToken( TokenQueue& queue, const char* str ) {
   // Create tokens
   for ( auto pc = str; ; pc++ ) {
     switch ( *pc ) {
+      case '.':
       case '0':
       case '1':
       case '2':
@@ -69,7 +70,7 @@ void InsertToken( TokenQueue& queue, const char* str ) {
       case '8':
       case '9': {
         if ( stat ) {
-          queue.push(new Token(atol(pc)));
+          queue.push(new Token(atof(pc)));
           stat = false;
         }
         break;
@@ -82,16 +83,6 @@ void InsertToken( TokenQueue& queue, const char* str ) {
       case ')': {
         queue.push(pTokenRightParenthesis);
         stat = false;
-        break;
-      }
-      case '!': {
-        queue.push(pTokenLogicalNOT);
-        stat = true;
-        break;
-      }
-      case '~': {
-        queue.push(pTokenBitwiseNOT);
-        stat = true;
         break;
       }
       case '+': {
@@ -122,46 +113,46 @@ void InsertToken( TokenQueue& queue, const char* str ) {
         stat = true;
         break;
       }
-      case '%': {
-        queue.push(pTokenModulo);
+      case 'c': {
+        queue.push(pTokenCos);
         stat = true;
+        pc+=2;
         break;
       }
-      case '<': {
-        queue.push(pTokenBitwiseLeftShift);
-        pc++;
+      case 'e': {
+        queue.push(pTokenExp);
         stat = true;
+        pc+=2;
         break;
       }
-      case '>': {
-        queue.push(pTokenBitwiseLeftShift);
-        pc++;
+      case 'f': {
+        queue.push(pTokenFabs);
         stat = true;
+        pc+=3;
         break;
       }
-      case '&': {
-        if ( *(pc+1) == '&' ) {
-          queue.push(pTokenLogicalAND);
-          pc++;
-        } else {
-          queue.push(pTokenBitwiseAND);
+      case 'l': {
+        queue.push(pTokenLog);
+        stat = true;
+        pc+=2;
+        break;
+      }
+      case 'p': {
+        queue.push(pTokenPow);
+        stat = true;
+        pc+=2;
+        break;
+      }
+      case 's': {
+        if ( *(pc+1) == 'i' ) {
+          queue.push(pTokenSin);
+          stat = true;
+          pc+=2;
+        } else if ( *(pc+1) == 'q' ) {
+          queue.push(pTokenSqrt);
+          stat = true;
+          pc+=3;
         }
-        stat = true;
-        break;
-      }
-      case '|': {
-        if ( *(pc+1) == '|' ) {
-          queue.push(pTokenLogicalOR);
-          pc++;
-        } else {
-          queue.push(pTokenBitwiseOR);
-        }
-        stat = true;
-        break;
-      }
-      case '^': {
-        queue.push(pTokenBitwiseXOR);
-        stat = true;
         break;
       }
       case '\0': {

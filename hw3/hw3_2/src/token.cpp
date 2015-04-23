@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////
-// Data Structures and Algorithms - Homework 3-1                              //
+// Data Structures and Algorithms - Homework 3-2                              //
 // token.cpp                                                                  //
 // The class Token                                                            //
 //                                                                            //
