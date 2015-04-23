@@ -16,7 +16,7 @@ namespace hw3 {
 
 ////////////////////////////////////////////////////////////////////////////////
 // The constructor of Token                                                   //
-// Initialize a symbolic token                                                //
+// Initialize a punctuation token                                             //
 //                                                                            //
 // Parameters:                                                                //
 // name:          the name                                                    //
