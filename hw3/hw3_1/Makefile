@@ -1,7 +1,7 @@
 CC       = g++
 OPTFLAGS = -O2 -std=c++11 -Wall
 
-TARGETS = hw3_1
+TARGETS = ../3_4_1.out
 
 OBJECTS = \
 	src/hw3_1.o \

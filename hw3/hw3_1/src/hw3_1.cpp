@@ -30,7 +30,6 @@ int main( int argc, char** const argv ) {
 
   while ( cin.getline(str, MAX_LENGTH) ) {
     InsertToken(infix_queue, str);
-    cout << "Infix Exp: " << infix_queue << endl;
     ShuntingYard(infix_queue, stack, postfix_queue);
     cout << "Postfix Exp: " << postfix_queue << endl;
     EvaluatePostfix(postfix_queue, stack);
