@@ -6,12 +6,12 @@
 // Author: emfo<emfomy@gmail.com>                                             //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include <iostream>
 #include "token.hpp"
 #include "token_stack.hpp"
 #include "token_queue.hpp"
 #include "shunting_yard.hpp"
 #include "evaluate_postfix.hpp"
-#include <iostream>
 using namespace hw3;
 using namespace std;
 

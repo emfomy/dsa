@@ -6,12 +6,13 @@
 // Author: emfo<emfomy@gmail.com>                                             //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include <iostream>
+#include <iomanip>
 #include "token.hpp"
 #include "token_stack.hpp"
 #include "token_queue.hpp"
 #include "shunting_yard.hpp"
 #include "evaluate_postfix.hpp"
-#include <iostream>
 using namespace hw3;
 using namespace std;
 
@@ -26,6 +27,8 @@ int main( int argc, char** const argv ) {
   TokenStack stack;
 
   ios::sync_with_stdio(false);
+  cout << setprecision(6);
+  cout.setf( std::ios::fixed );
 
   while ( cin.getline(str, MAX_LENGTH) ) {
     InsertToken(infix_queue, str);
