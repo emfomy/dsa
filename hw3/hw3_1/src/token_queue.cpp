@@ -50,7 +50,10 @@ std::ostream& operator<<( std::ostream& os, TokenQueue& queue ) {
 // str:   char array                                                          //
 ////////////////////////////////////////////////////////////////////////////////
 void InsertToken( TokenQueue& queue, const char* str ) {
-  bool stat = false; // The current token is numerical/left-parenthesis or not
+  // The current token
+  // 'true' means non-numerical tokens
+  // 'false' means numerical tokens and RightParenthesis
+  bool stat = true;
 
   // Create tokens
   for ( auto pc = str; ; pc++ ) {
@@ -66,76 +69,74 @@ void InsertToken( TokenQueue& queue, const char* str ) {
       case '8':
       case '9': {
         if ( stat ) {
-          queue.back()->InsertNumber(*pc-'0');
-        } else {
-          queue.push(new Token(*pc-'0'));
+          queue.push(new Token(atol(pc)));
+          stat = false;
         }
-        stat = true;
         break;
       }
       case '(': {
         queue.push(pTokenLeftParenthesis);
-        stat = false;
+        stat = true;
         break;
       }
       case ')': {
         queue.push(pTokenRightParenthesis);
-        stat = true;
+        stat = false;
         break;
       }
       case '!': {
         queue.push(pTokenLogicalNOT);
-        stat = false;
+        stat = true;
         break;
       }
       case '~': {
         queue.push(pTokenBitwiseNOT);
-        stat = false;
+        stat = true;
         break;
       }
       case '+': {
         if ( stat ) {
-          queue.push(pTokenAddition);
-        } else {
           queue.push(pTokenUnaryPlus);
+        } else {
+          queue.push(pTokenAddition);
         }
-        stat = false;
+        stat = true;
         break;
       }
       case '-': {
         if ( stat ) {
-          queue.push(pTokenSubtraction);
-        } else {
           queue.push(pTokenUnaryMinus);
+        } else {
+          queue.push(pTokenSubtraction);
         }
-        stat = false;
+        stat = true;
         break;
       }
       case '*': {
         queue.push(pTokenMultiplication);
-        stat = false;
+        stat = true;
         break;
       }
       case '/': {
         queue.push(pTokenDivision);
-        stat = false;
+        stat = true;
         break;
       }
       case '%': {
         queue.push(pTokenModulo);
-        stat = false;
+        stat = true;
         break;
       }
       case '<': {
         queue.push(pTokenBitwiseLeftShift);
         pc++;
-        stat = false;
+        stat = true;
         break;
       }
       case '>': {
         queue.push(pTokenBitwiseLeftShift);
         pc++;
-        stat = false;
+        stat = true;
         break;
       }
       case '&': {
@@ -145,7 +146,7 @@ void InsertToken( TokenQueue& queue, const char* str ) {
         } else {
           queue.push(pTokenBitwiseAND);
         }
-        stat = false;
+        stat = true;
         break;
       }
       case '|': {
@@ -155,12 +156,12 @@ void InsertToken( TokenQueue& queue, const char* str ) {
         } else {
           queue.push(pTokenBitwiseOR);
         }
-        stat = false;
+        stat = true;
         break;
       }
       case '^': {
         queue.push(pTokenBitwiseXOR);
-        stat = false;
+        stat = true;
         break;
       }
       case '\0': {
