@@ -11,8 +11,7 @@
 #define HW3_2_HW3_HPP_
 
 #include <cstdint>
-#include <queue>
-#include <stack>
+#include <deque>
 
 ////////////////////////////////////////////////////////////////////////////////
 // The namespace hw3                                                          //
@@ -29,8 +28,7 @@ typedef uint8_t Type;
 // Token types                                                                //
 ////////////////////////////////////////////////////////////////////////////////
 class Token;
-typedef std::queue<Token*> TokenQueue;
-typedef std::stack<Token*> TokenStack;
+typedef std::deque<Token*> TokenDeque;
 
 }
 

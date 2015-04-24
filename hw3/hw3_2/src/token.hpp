@@ -65,7 +65,7 @@ class Token
 
   void InsertNumber( const Number );
 
-  void operator()( TokenStack& );
+  void operator()( TokenDeque& );
   bool operator<( const Token& ) const;
   friend std::ostream& operator<<( std::ostream&, const Token& );
 };

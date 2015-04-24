@@ -6,16 +6,14 @@ TARGETS = ../3_4_1.out
 OBJECTS = \
 	src/hw3_1.o \
 	src/token.o \
-	src/token_queue.o \
-	src/token_stack.o \
+	src/token_deque.o \
 	src/shunting_yard.o \
 	src/evaluate_postfix.o \
 
 HEADERS = \
 	src/hw3.hpp \
 	src/token.hpp \
-	src/token_queue.hpp \
-	src/token_stack.hpp \
+	src/token_deque.hpp \
 	src/shunting_yard.hpp \
 	src/evaluate_postfix.hpp \
 

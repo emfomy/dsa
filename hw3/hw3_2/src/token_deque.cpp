@@ -1,12 +1,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Data Structures and Algorithms - Homework 3-2                              //
-// token_queue.cpp                                                            //
-// The class TokenQueue                                                       //
+// token_deque.cpp                                                            //
+// The class TokenDeque                                                       //
 //                                                                            //
 // Author: emfo<emfomy@gmail.com>                                             //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "token_queue.hpp"
+#include "token_deque.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////
 // The namespace hw3                                                          //
@@ -14,30 +14,18 @@
 namespace hw3 {
 
 ////////////////////////////////////////////////////////////////////////////////
-// Insert a token queue object into stream                                    //
+// Insert a token deque object into stream                                    //
 //                                                                            //
 // Parameters:                                                                //
 // os:  the ostream object                                                    //
-// obj: the token queue object to be inserted into the stream                 //
+// obj: the token deque object to be inserted into the stream                 //
 //                                                                            //
 // Return Value:                                                              //
-// the ostream object, with tokens separated with spaces                      //
+// the ostream object, with tokens separated with spaces and a leading space  //
 ////////////////////////////////////////////////////////////////////////////////
-std::ostream& operator<<( std::ostream& os, TokenQueue& queue ) {
-  if ( !queue.empty() ) {
-    queue.push(NULL);
-    auto pt = queue.front();
-    queue.pop();
-    os << *pt;
-    queue.push(pt);
-    pt = queue.front();
-    queue.pop();
-    while ( pt ) {
-      os << ' ' << *pt;
-      queue.push(pt);
-      pt = queue.front();
-      queue.pop();
-    }
+std::ostream& operator<<( std::ostream& os, const TokenDeque& deque ) {
+  for ( auto it = deque.cbegin(); it != deque.cend(); ++it ) {
+    os << ' ' << **it;
   }
   return os;
 }
@@ -49,7 +37,7 @@ std::ostream& operator<<( std::ostream& os, TokenQueue& queue ) {
 // queue: the token queue object to be extracted into from stream             //
 // str:   char array                                                          //
 ////////////////////////////////////////////////////////////////////////////////
-void InsertToken( TokenQueue& queue, const char* str ) {
+void InsertToken( TokenDeque& queue, const char* str ) {
   // The current token
   // 'true' means non-numerical tokens
   // 'false' means numerical tokens and RightParenthesis
@@ -70,86 +58,86 @@ void InsertToken( TokenQueue& queue, const char* str ) {
       case '8':
       case '9': {
         if ( stat ) {
-          queue.push(new Token(atof(pc)));
+          queue.push_back(new Token(atof(pc)));
           stat = false;
         }
         break;
       }
       case '(': {
-        queue.push(pTokenLeftParenthesis);
+        queue.push_back(pTokenLeftParenthesis);
         stat = true;
         break;
       }
       case ')': {
-        queue.push(pTokenRightParenthesis);
+        queue.push_back(pTokenRightParenthesis);
         stat = false;
         break;
       }
       case '+': {
         if ( stat ) {
-          queue.push(pTokenUnaryPlus);
+          queue.push_back(pTokenUnaryPlus);
         } else {
-          queue.push(pTokenAddition);
+          queue.push_back(pTokenAddition);
         }
         stat = true;
         break;
       }
       case '-': {
         if ( stat ) {
-          queue.push(pTokenUnaryMinus);
+          queue.push_back(pTokenUnaryMinus);
         } else {
-          queue.push(pTokenSubtraction);
+          queue.push_back(pTokenSubtraction);
         }
         stat = true;
         break;
       }
       case '*': {
-        queue.push(pTokenMultiplication);
+        queue.push_back(pTokenMultiplication);
         stat = true;
         break;
       }
       case '/': {
-        queue.push(pTokenDivision);
+        queue.push_back(pTokenDivision);
         stat = true;
         break;
       }
       case 'c': {
-        queue.push(pTokenCos);
+        queue.push_back(pTokenCos);
         stat = true;
         pc+=2;
         break;
       }
       case 'e': {
-        queue.push(pTokenExp);
+        queue.push_back(pTokenExp);
         stat = true;
         pc+=2;
         break;
       }
       case 'f': {
-        queue.push(pTokenFabs);
+        queue.push_back(pTokenFabs);
         stat = true;
         pc+=3;
         break;
       }
       case 'l': {
-        queue.push(pTokenLog);
+        queue.push_back(pTokenLog);
         stat = true;
         pc+=2;
         break;
       }
       case 'p': {
-        queue.push(pTokenPow);
+        queue.push_back(pTokenPow);
         stat = true;
         pc+=2;
         break;
       }
       case 's': {
         if ( *(pc+1) == 'i' ) {
-          queue.push(pTokenSin);
+          queue.push_back(pTokenSin);
           stat = true;
           pc+=2;
         } else if ( *(pc+1) == 'q' ) {
-          queue.push(pTokenSqrt);
+          queue.push_back(pTokenSqrt);
           stat = true;
           pc+=3;
         }

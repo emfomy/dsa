@@ -7,7 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "token.hpp"
-#include "token_stack.hpp"
+#include "token_deque.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////
 // The namespace hw3                                                          //
@@ -114,17 +114,17 @@ void Token::InsertNumber( const Number number ) {
 // Output Parameters:                                                         //
 // stack: the stack after running the unary/binary function                   //
 ////////////////////////////////////////////////////////////////////////////////
-void Token::operator()( TokenStack& stack ) {
+void Token::operator()( TokenDeque& stack ) {
   if ( this->unary_ != NULL ) {
-    auto px = stack.top();
+    auto px = stack.back();
     px->number_ = this->unary_(px->number_);
   } else if ( this->binary_ != NULL ) {
-    auto py = stack.top(); stack.pop();
-    auto px = stack.top();
+    auto py = stack.back(); stack.pop_back();
+    auto px = stack.back();
     px->number_ = this->binary_(px->number_, py->number_);
     delete py;
   } else {
-    stack.push(this);
+    stack.push_back(this);
   }
 }
 

@@ -1,14 +1,14 @@
 ////////////////////////////////////////////////////////////////////////////////
-// Data Structures and Algorithms - Homework 3-1                              //
-// token_stack.hpp                                                            //
-// The header file of TokenStack                                              //
+// Data Structures and Algorithms - Homework 3-2                              //
+// token_deque.hpp                                                            //
+// The header file of TokenDeque                                              //
 //                                                                            //
 // Author: emfo<emfomy@gmail.com>                                             //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef HW3_1_TOKEN_STACK_HPP_
+#ifndef HW3_2_TOKEN_DEQUE_HPP_
 
-#define HW3_1_TOKEN_STACK_HPP_
+#define HW3_2_TOKEN_DEQUE_HPP_
 
 #include <iostream>
 #include "hw3.hpp"
@@ -20,9 +20,10 @@
 namespace hw3 {
 
 ////////////////////////////////////////////////////////////////////////////////
-// The stack of Token                                                         //
+// The deque of Token                                                         //
 ////////////////////////////////////////////////////////////////////////////////
-std::ostream& operator<<( std::ostream&, const TokenStack& );
+std::ostream& operator<<( std::ostream&, const TokenDeque& );
+void InsertToken( TokenDeque&, const char* );
 
 }
 

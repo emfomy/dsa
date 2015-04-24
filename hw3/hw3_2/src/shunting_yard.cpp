@@ -24,73 +24,73 @@ namespace hw3 {
 // Output Parameters:                                                         //
 // postfix_queue:  an empty queue, overwritten by postfix expressions         //
 ////////////////////////////////////////////////////////////////////////////////
-void ShuntingYard( TokenQueue& infix_queue,
-                   TokenStack& operator_stack,
-                   TokenQueue& postfix_queue ) {
+void ShuntingYard( TokenDeque& infix_queue,
+                   TokenDeque& operator_stack,
+                   TokenDeque& postfix_queue ) {
 
   // Pop tokens from input queue
   while ( !infix_queue.empty() ) {
     auto& token1 = *infix_queue.front();
-    infix_queue.pop();
+    infix_queue.pop_front();
     switch (token1.precedence()) {
       case 0x00: { // Numerical tokens
-        postfix_queue.push(&token1);
+        postfix_queue.push_back(&token1);
         break;
       }
       case 0xFF: { // Left parenthesis tokens
-        operator_stack.push(&token1);
+        operator_stack.push_back(&token1);
         break;
       }
       case 0xFE: { // Right parenthesis tokens
         while ( !(operator_stack.empty()) ) {
-          auto& token2 = *operator_stack.top();
-          operator_stack.pop();
+          auto& token2 = *operator_stack.back();
+          operator_stack.pop_back();
           if ( token2.precedence() == 0xFF ) {
             break;
           }
-          postfix_queue.push(&token2);
+          postfix_queue.push_back(&token2);
         }
-        auto& token2 = *operator_stack.top();
+        auto& token2 = *operator_stack.back();
         if ( token2.precedence() == 0xFC ) {
-          operator_stack.pop();
-          postfix_queue.push(&token2);
+          operator_stack.pop_back();
+          postfix_queue.push_back(&token2);
         }
         break;
       }
       case 0xFD: { // Comma tokens
         while ( !(operator_stack.empty()) ) {
-          auto& token2 = *operator_stack.top();
+          auto& token2 = *operator_stack.back();
           if ( token2.precedence() == 0xFF ) {
             break;
           }
-          operator_stack.pop();
-          postfix_queue.push(&token2);
+          operator_stack.pop_back();
+          postfix_queue.push_back(&token2);
         }
         break;
       }
       case 0xFC: { // Function tokens
-        operator_stack.push(&token1);
+        operator_stack.push_back(&token1);
         break;
       }
       default: { // Operator tokens
         while ( !(operator_stack.empty()) ) {
-          auto& token2 = *operator_stack.top();
+          auto& token2 = *operator_stack.back();
           if ( token1 < token2 ) {
             break;
           }
-          operator_stack.pop();
-          postfix_queue.push(&token2);
+          operator_stack.pop_back();
+          postfix_queue.push_back(&token2);
         }
-        operator_stack.push(&token1);
+        operator_stack.push_back(&token1);
       }
     }
   }
 
   // Pop tokens from operator stack
   while ( !(operator_stack.empty()) ) {
-    auto& token2 = *operator_stack.top();
-    operator_stack.pop();
-    postfix_queue.push(&token2);
+    auto& token2 = *operator_stack.back();
+    operator_stack.pop_back();
+    postfix_queue.push_back(&token2);
   }
 }
 
