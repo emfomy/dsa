@@ -62,6 +62,10 @@ void ShuntingYard( TokenDeque& infix_queue,
         break;
       }
       default: { // Operator tokens
+        if ( !(operator_stack.empty()) && !(token1 < *operator_stack.back()) ) {
+          cout << "  Pop higher precedence tokens from stack to output."
+               << endl;
+        }
         while ( !(operator_stack.empty()) ) {
           auto& token2 = *operator_stack.back();
           if ( token1 < token2 ) {
@@ -71,8 +75,7 @@ void ShuntingYard( TokenDeque& infix_queue,
           postfix_queue.push_back(&token2);
         }
         operator_stack.push_back(&token1);
-        cout << "  Pop higher precedence tokens from stack to output." << endl
-             << "  Push current token to stack." << endl;
+        cout << "  Push current token to stack." << endl;
       }
     }
     cout << " Output:" << postfix_queue << endl
@@ -87,7 +90,7 @@ void ShuntingYard( TokenDeque& infix_queue,
     operator_stack.pop_back();
     postfix_queue.push_back(&token2);
   }
-  cout << "Encounter '\\n':"
+  cout << "Encounter '\\n':" << endl
        << "  Pop entire stack to output." << endl
        << " Output:" << postfix_queue << endl
        << " Stack: " << operator_stack << endl
