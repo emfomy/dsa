@@ -23,11 +23,11 @@ namespace hw3 {
 // Output Parameters:                                                         //
 // number_stack:  overwritten by evaluating result                            //
 ////////////////////////////////////////////////////////////////////////////////
-void EvaluatePostfix( TokenQueue& postfix_queue, TokenStack& number_stack ) {
+void EvaluatePostfix( TokenDeque& postfix_queue, TokenDeque& number_stack ) {
   while ( !postfix_queue.empty() ) {
     auto& token = *postfix_queue.front();
     token(number_stack);
-    postfix_queue.pop();
+    postfix_queue.pop_front();
   }
 }
 

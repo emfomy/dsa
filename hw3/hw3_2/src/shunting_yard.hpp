@@ -12,6 +12,7 @@
 
 #include "hw3.hpp"
 #include "token.hpp"
+#include "token_deque.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////
 // The namespace hw3                                                          //
@@ -21,7 +22,7 @@ namespace hw3 {
 ////////////////////////////////////////////////////////////////////////////////
 // The shunting-yard algorithm                                                //
 ////////////////////////////////////////////////////////////////////////////////
-void ShuntingYard( TokenQueue&, TokenStack&, TokenQueue& );
+void ShuntingYard( TokenDeque&, TokenDeque&, TokenDeque& );
 
 }
 
