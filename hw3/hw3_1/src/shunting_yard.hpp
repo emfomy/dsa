@@ -12,6 +12,7 @@
 
 #include "hw3.hpp"
 #include "token.hpp"
+#include "token_deque.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////
 // The namespace hw3                                                          //
