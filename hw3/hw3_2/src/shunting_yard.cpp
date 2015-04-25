@@ -59,11 +59,13 @@ void ShuntingYard( TokenDeque& infix_queue,
         }
         cout << "  Pop stack to output until '(' found." << endl
              << "  Discard matching parenthesis." << endl;
-        auto& token2 = *operator_stack.back();
-        if ( token2.precedence() == 0xFC ) {
-          operator_stack.pop_back();
-          postfix_queue.push_back(&token2);
-          cout << "  Pop the function token from stack to output" << endl;
+        if ( !(operator_stack.empty()) ) {
+          auto& token2 = *operator_stack.back();
+          if ( token2.precedence() == 0xFC ) {
+            operator_stack.pop_back();
+            postfix_queue.push_back(&token2);
+            cout << "  Pop the function token from stack to output" << endl;
+          }
         }
         break;
       }

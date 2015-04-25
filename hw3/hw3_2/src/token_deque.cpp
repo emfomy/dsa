@@ -73,6 +73,11 @@ void InsertToken( TokenDeque& queue, const char* str ) {
         stat = false;
         break;
       }
+      case ',': {
+        queue.push_back(pTokenComma);
+        stat = true;
+        break;
+      }
       case '+': {
         if ( stat ) {
           queue.push_back(pTokenUnaryPlus);
