@@ -122,7 +122,7 @@ void InsertToken( TokenDeque& queue, const char* str ) {
         break;
       }
       case '>': {
-        queue.push_back(pTokenBitwiseLeftShift);
+        queue.push_back(pTokenBitwiseRightShift);
         pc++;
         stat = true;
         break;

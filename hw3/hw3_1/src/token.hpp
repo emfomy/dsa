@@ -105,11 +105,12 @@ static Token* pTokenAddition =
 static Token* pTokenSubtraction =
     new Token("-" , 0x06, true,
               [](Number x, Number y)->Number{return (x - y);});
+// Level seven
 static Token* pTokenBitwiseLeftShift =
-    new Token("<<", 0x06, true,
+    new Token("<<", 0x07, true,
               [](Number x, Number y)->Number{return (x << y);});
 static Token* pTokenBitwiseRightShift =
-    new Token(">>", 0x06, true,
+    new Token(">>", 0x07, true,
               [](Number x, Number y)->Number{return (x >> y);});
 // Level ten
 static Token* pTokenBitwiseAND =
