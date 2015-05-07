@@ -5,12 +5,14 @@ TARGETS  = tree forest
 
 OBJECTS1 = \
 	src/hw4_1.o \
+	src/sample.o \
 
 OBJECTS2 = \
 	src/hw4_2.o \
 
 HEADERS  = \
 	src/hw4.hpp \
+	src/sample.hpp \
 
 all: $(TARGETS)
 
@@ -24,4 +26,4 @@ forest: $(OBJECTS2) $(HEADERS)
 	$(CC) -c $(OPTFLAGS) $< -o $@
 
 clean:
-	rm -rf $(TARGETS) $(OBJECTS)
+	rm -rf $(TARGETS) $(OBJECTS1) $(OBJECTS2)
