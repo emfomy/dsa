@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////
-// Sample Structures and Algorithms - Homework 4                              //
+// Data Structures and Algorithms - Homework 4                                //
 // sample.cpp                                                                 //
 // The class Sample                                                           //
 //                                                                            //
@@ -47,7 +47,7 @@ Sample::Sample( std::string& str, int& idx_size,
       ++idx_size;
     }
     tmp = std::strtok(NULL, ": ");
-    features_[idx_ds[id]] = atof(tmp);
+    this->features_[idx_ds[id]] = atof(tmp);
     tmp = std::strtok(NULL, ": ");
   }
 

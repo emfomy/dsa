@@ -3,16 +3,22 @@ OPTFLAGS = -O2 -std=c++11 -Wall
 
 TARGETS  = tree forest
 
-OBJECTS1 = \
-	src/hw4_1.o \
+OBJECTS  = \
 	src/sample.o \
+	src/sample_set.o \
+
+OBJECTS1 = \
+	$(OBJECTS) \
+	src/hw4_1.o \
 
 OBJECTS2 = \
+	$(OBJECTS) \
 	src/hw4_2.o \
 
 HEADERS  = \
 	src/hw4.hpp \
 	src/sample.hpp \
+	src/sample_set.hpp \
 
 all: $(TARGETS)
 

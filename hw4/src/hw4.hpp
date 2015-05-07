@@ -15,8 +15,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 namespace hw4 {
 
-  // The maximum number of features
-  const int kMaxFeatures = 1024;
+// The maximum number of features
+const int kMaxFeatures = 1024;
 
 }
 
