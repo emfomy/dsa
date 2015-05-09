@@ -113,17 +113,15 @@ Node::Node( const int id, SampleVector* matrix, const double tolerance,
 
   // Partition the sample matrix
   {
-    auto func0 = [id](Sample* x)->bool{return (x->id_ == id*2);};
-    auto func1 = [id](Sample* x)->bool{return (x->id_ == id*2+1);};
+    auto func = [id](Sample* x)->bool{return (x->id_ == id*2);};
     auto& tmp_vec = matrix[num_features];
     for ( auto i = 0; i < num_features; ++i ) {
       if ( i != best_idx_s ) {
         auto& vector = matrix[i];
-        auto tmp_it = std::copy_if(vector.begin()+start, vector.begin()+end,
-                                   tmp_vec.begin(), func0);
-        std::copy_if(vector.begin()+start, vector.begin()+end,
-                     tmp_it, func1);
-        std::copy_n(tmp_vec.begin(), num_samples, vector.begin());
+        std::partition_copy(vector.begin()+start, vector.begin()+end,
+                            tmp_vec.begin(), tmp_vec.begin()+best_samples,
+                            func);
+        std::copy_n(tmp_vec.begin(), num_samples, vector.begin()+start);
       }
     }
   }
@@ -214,6 +212,8 @@ void Node::Print( const int indent ) {
       cout << "(rand()%2*2-1);" << endl;
     }
   } else {
+    cout << setprecision(6) << fixed;
+
     cout << setw(indent*2) << setfill(' ') << ""
          << "if ( attr[" << this->idx_d_ << "] < "
          << this->threshold_ << " ) {" << endl;
