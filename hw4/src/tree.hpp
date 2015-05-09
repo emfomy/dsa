@@ -1,53 +1,39 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Data Structures and Algorithms - Homework 4                                //
-// sample_set.hpp                                                             //
-// The header file of SampleSet                                               //
+// tree.hpp                                                                   //
+// The header file of Tree                                                    //
 //                                                                            //
 // Author: emfo<emfomy@gmail.com>                                             //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef HW4_SAMPLE_SET_HPP_
+#ifndef HW4_TREE_HPP_
 
-#define HW4_SAMPLE_SET_HPP_
+#define HW4_TREE_HPP_
 
-#include <iostream>
-#include <string>
+#include <algorithm>
 #include "hw4.hpp"
+#include "node.hpp"
 #include "sample.hpp"
+#include "sample_set.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////
 // The namespace hw4                                                          //
 ////////////////////////////////////////////////////////////////////////////////
 namespace hw4 {
 
-class Tree;
-
 ////////////////////////////////////////////////////////////////////////////////
-// The class of a sample set                                                  //
+// The class of a tree                                                        //
 ////////////////////////////////////////////////////////////////////////////////
-class SampleSet {
-  friend class Tree;
-
+class Tree {
  private:
-  // The vector of samples
-  SampleVector samples_;
-
-  // The number of features
-  int num_features_ = 0;
-
-  // The number of features
-  int num_samples_ = 0;
-
-  // the index maps dense features to sparse features
-  int idx_ds_[kMaxFeatures+1];
-
-  // the index maps dense features to sparse features
-  int idx_sd_[kMaxFeatures];
+  // The root of this tree
+  Node* root_;
 
  public:
-  SampleSet();
-  friend std::istream& operator>>( std::istream&, SampleSet& );
-  friend std::ostream& operator<<( std::ostream&, const SampleSet& );
+  Tree( const SampleSet&, const double );
+  ~Tree();
+
+  void Print( const int );
 };
 
 }

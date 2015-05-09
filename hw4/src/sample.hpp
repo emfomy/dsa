@@ -22,29 +22,36 @@
 namespace hw4 {
 
 class SampleSet;
+class Node;
+class Tree;
 
 ////////////////////////////////////////////////////////////////////////////////
 // The class of a sample                                                      //
 ////////////////////////////////////////////////////////////////////////////////
 class Sample {
   friend class SampleSet;
+  friend class Node;
+  friend class Tree;
 
  private:
   // The label of this sample.
-  bool label_;
+  int label_;
 
   // The features of this sample.
   double features_[kMaxFeatures];
+  
+  // The ID the node this sample belongs to
+  int id_ = 1;
 
  public:
-  Sample( std::string&, int&, int(&)[kMaxFeatures], int(&)[kMaxFeatures] );
+  Sample( std::string&, int&, int(&)[kMaxFeatures+1], int(&)[kMaxFeatures] );
   friend std::ostream& operator<<( std::ostream&, const SampleSet& );
 };
 
 ////////////////////////////////////////////////////////////////////////////////
-// The vector of Sample                                                       //
+// The pointer vector of Sample                                               //
 ////////////////////////////////////////////////////////////////////////////////
-typedef std::vector<Sample> SampleVector;
+typedef std::vector<Sample*> SampleVector;
 
 }
 

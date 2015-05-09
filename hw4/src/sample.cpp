@@ -24,7 +24,7 @@ namespace hw4 {
 // idx_sd:   the index maps sparse features to dense features                 //
 ////////////////////////////////////////////////////////////////////////////////
 Sample::Sample( std::string& str, int& idx_size,
-                int(&idx_ds)[kMaxFeatures], int(&idx_sd)[kMaxFeatures] ) {
+                int (&idx_ds)[kMaxFeatures+1], int (&idx_sd)[kMaxFeatures] ) {
   char *cstr, *tmp;
   int id;
 
@@ -33,22 +33,22 @@ Sample::Sample( std::string& str, int& idx_size,
   strncpy(cstr, str.c_str(), str.size()+1);
 
   // Get label
-  tmp = std::strtok(cstr, ": ");
-  this->label_ = (atoi(tmp) == 1);
-  tmp = std::strtok(NULL, ": ");
+  tmp = std::strtok(cstr, " ");
+  this->label_ = atoi(tmp);
+  tmp = std::strtok(NULL, ":");
 
   // Get features
   memset(this->features_, 0.0, sizeof(this->features_));
   while ( tmp != NULL ) {
-    id = atoi(tmp)-1;
+    id = atoi(tmp);
     if ( idx_ds[id] == -1 ) {
       idx_ds[id] = idx_size;
       idx_sd[idx_size] = id;
       ++idx_size;
     }
-    tmp = std::strtok(NULL, ": ");
+    tmp = std::strtok(NULL, " ");
     this->features_[idx_ds[id]] = atof(tmp);
-    tmp = std::strtok(NULL, ": ");
+    tmp = std::strtok(NULL, ":");
   }
 
   // Delete objects

@@ -6,6 +6,8 @@ TARGETS  = tree forest
 OBJECTS  = \
 	src/sample.o \
 	src/sample_set.o \
+	src/node.o \
+	src/tree.o \
 
 OBJECTS1 = \
 	$(OBJECTS) \
@@ -19,6 +21,8 @@ HEADERS  = \
 	src/hw4.hpp \
 	src/sample.hpp \
 	src/sample_set.hpp \
+	src/node.hpp \
+	src/tree.hpp \
 
 all: $(TARGETS)
 
