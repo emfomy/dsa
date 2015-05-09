@@ -40,7 +40,7 @@ class Sample {
   // The features of this sample.
   double features_[kMaxFeatures];
   
-  // The ID the node this sample belongs to
+  // The ID of the node this sample belongs to
   int id_ = 1;
 
  public:

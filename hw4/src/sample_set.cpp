@@ -43,25 +43,4 @@ std::istream& operator>>( std::istream& is, SampleSet& set ) {
   return is;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// Insert a sample set object into stream                                     //
-//                                                                            //
-// Parameters:                                                                //
-// os:  the ostream object                                                    //
-// set: the sample set object to be inserted into the stream                  //
-//                                                                            //
-// Return Value:                                                              //
-// the ostream object                                                         //
-////////////////////////////////////////////////////////////////////////////////
-std::ostream& operator<<( std::ostream& os, const SampleSet& set ) {
-  for ( auto it = set.samples_.cbegin(); it != set.samples_.cend(); ++it ) {
-    os << "// " << std::showpos << (*it)->label_ << std::noshowpos << ' ';
-    for ( auto i = 0; i < set.num_features_; i++ ) {
-      os << set.idx_sd_[i] << ':' << (*it)->features_[i] << ' ';
-    }
-    os << std::endl;
-  }
-  return os;
-}
-
 }
