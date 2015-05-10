@@ -52,6 +52,7 @@ class SampleSet {
   SampleSet( const int );
   ~SampleSet();
   friend std::istream& operator>>( std::istream&, SampleSet& );
+  friend std::ostream& operator<<( std::ostream&, const SampleSet& );
 };
 
 }

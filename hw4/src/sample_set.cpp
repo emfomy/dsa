@@ -18,7 +18,9 @@ namespace hw4 {
 // The constructor of SampleSet                                               //
 ////////////////////////////////////////////////////////////////////////////////
 SampleSet::SampleSet() {
-  memset(this->idx_ds_, kNull, sizeof(this->idx_ds_));
+  for ( auto i = 0; i < kMaxFeatures+1; ++i ) {
+    this->idx_ds_[i] = kNull;
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -28,7 +30,9 @@ SampleSet::SampleSet() {
 // num_trees: the number of trees                                             //
 ////////////////////////////////////////////////////////////////////////////////
 SampleSet::SampleSet( const int num_trees ) {
-  memset(this->idx_ds_, kNull, sizeof(this->idx_ds_));
+  for ( auto i = 0; i < kMaxFeatures+1; ++i ) {
+    this->idx_ds_[i] = kNull;
+  }
   this->num_trees_ = num_trees;
 }
 
@@ -61,6 +65,27 @@ istream& operator>>( istream& is, SampleSet& set ) {
   }
   set.num_samples_ = set.samples_.size();
   return is;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Insert a sample set object into stream                                     //
+//                                                                            //
+// Parameters:                                                                //
+// os:  the ostream object                                                    //
+// set: the sample set object to be inserted into the stream                  //
+//                                                                            //
+// Return Value:                                                              //
+// the ostream object                                                         //
+////////////////////////////////////////////////////////////////////////////////
+std::ostream& operator<<( std::ostream& os, const SampleSet& set ) {
+  for ( auto it = set.samples_.cbegin(); it != set.samples_.cend(); ++it ) {
+    os << "// " << std::showpos << (*it)->label_ << std::noshowpos << ' ';
+    for ( auto i = 0; i < set.num_features_; i++ ) {
+      os << set.idx_sd_[i] << ':' << (*it)->features_[i] << ' ';
+    }
+    os << std::endl;
+  }
+  return os;
 }
 
 }
