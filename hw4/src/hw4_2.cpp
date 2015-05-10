@@ -60,8 +60,9 @@ int main( int argc, char *argv[] ) {
   cout << "#include <cstdlib>" << endl;
   cout << "#include <ctime>" << endl << endl;
 
-  // Display trees
-  forest.PrintTrees();
+  // Display tree functions declaration
+  forest.PrintDeclaration();
+  cout << endl;
 
   // Display function comments
   cout << setw(80) << setfill('/')
@@ -84,12 +85,15 @@ int main( int argc, char *argv[] ) {
        << "" << endl;
 
   // Display function
-  cout << "int forest_predict( double *attr ) {" << endl;
+  cout << "int forest_predict( double* attr ) {" << endl;
   cout << "  // Initialize random seed" << endl;
   cout << "  srand(time(NULL));" << endl << endl;
   cout << "  // Predict response using decision forest" << endl;
   forest.Print(1);
   cout << "}" << endl << endl;
+
+  // Display tree functions
+  forest.PrintTrees();
 
   return 0;
 }

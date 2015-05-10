@@ -36,6 +36,7 @@ class Forest {
   ~Forest();
   void Print( const int );
   void PrintTrees();
+  void PrintDeclaration();
 };
 
 }
