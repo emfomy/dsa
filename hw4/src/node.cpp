@@ -34,7 +34,7 @@ Node::Node( const int id, const int id_tree, SampleVector* matrix,
             const int start, const int* idx_sd ) {
 
   // Check tolerance
-  if ( !(Confusion(num_samples, num_positive) > tolerance) ) {
+  if ( !(Confusion(num_samples, num_positive) >= tolerance) ) {
     if ( 2*num_positive > num_samples ) {
       this->label_ = +1;
     } else if ( 2*num_positive < num_samples ) {
@@ -89,7 +89,7 @@ Node::Node( const int id, const int id_tree, SampleVector* matrix,
     }
   }
 
-  // Check if this node is inseparable
+  // Check if this node is unpartitionable
   if ( !isfinite(min_confusion) ) {
     if ( 2*num_positive > num_samples ) {
       this->label_ = +1;
