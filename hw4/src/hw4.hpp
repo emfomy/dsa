@@ -18,6 +18,9 @@ namespace hw4 {
 // The maximum number of features
 const int kMaxFeatures = 1024;
 
+// The null index
+const int kNull = 0;
+
 }
 
 #endif

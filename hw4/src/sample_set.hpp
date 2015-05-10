@@ -38,6 +38,9 @@ class SampleSet {
   // The number of features
   int num_samples_ = 0;
 
+  // The number of trees
+  int num_trees_ = 1;
+
   // the index maps dense features to sparse features
   int idx_ds_[kMaxFeatures+1];
 
@@ -46,8 +49,9 @@ class SampleSet {
 
  public:
   SampleSet();
+  SampleSet( const int );
+  ~SampleSet();
   friend std::istream& operator>>( std::istream&, SampleSet& );
-  friend std::ostream& operator<<( std::ostream&, const SampleSet& );
 };
 
 }
