@@ -1,19 +1,18 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Data Structures and Algorithms - Homework 4                                //
-// tree.hpp                                                                   //
-// The header file of Tree                                                    //
+// forest.hpp                                                                   //
+// The header file of Forest                                                  //
 //                                                                            //
 // Author: emfo<emfomy@gmail.com>                                             //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef HW4_TREE_HPP_
+#ifndef HW4_FOREST_HPP_
 
-#define HW4_TREE_HPP_
+#define HW4_FOREST_HPP_
 
-#include <vector>
 #include <algorithm>
 #include "hw4.hpp"
-#include "node.hpp"
+#include "tree.hpp"
 #include "sample_set.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -22,24 +21,22 @@
 namespace hw4 {
 
 ////////////////////////////////////////////////////////////////////////////////
-// The class of a tree                                                        //
+// The class of a forest                                                      //
 ////////////////////////////////////////////////////////////////////////////////
-class Tree {
+class Forest {
  private:
-  // The root of this tree
-  Node* root_;
+  // The trees
+  TreeVector trees_;
+
+  // The number of trees
+  int num_trees_;
 
  public:
-  Tree( const SampleSet&, const double );
-  Tree( const SampleSet&, const int );
-  ~Tree();
+  Forest( const SampleSet& set, const int );
+  ~Forest();
   void Print( const int );
+  void PrintTrees();
 };
-
-////////////////////////////////////////////////////////////////////////////////
-// The pointer vector of Tree                                                 //
-////////////////////////////////////////////////////////////////////////////////
-typedef std::vector<Tree*> TreeVector;
 
 }
 

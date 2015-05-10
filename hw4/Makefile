@@ -3,6 +3,8 @@ OPTFLAGS = -O2 -std=c++11 -Wall
 
 TARGETS  = tree forest
 
+.PHONY: all clean
+
 OBJECTS  = \
 	src/sample.o \
 	src/sample_set.o \
@@ -16,6 +18,7 @@ OBJECTS1 = \
 OBJECTS2 = \
 	$(OBJECTS) \
 	src/hw4_2.o \
+	src/forest.o \
 
 HEADERS  = \
 	src/hw4.hpp \
@@ -23,6 +26,7 @@ HEADERS  = \
 	src/sample_set.hpp \
 	src/node.hpp \
 	src/tree.hpp \
+	src/forest.hpp \
 
 all: $(TARGETS)
 

@@ -19,6 +19,7 @@ namespace hw4 {
 //                                                                            //
 // Parameters:                                                                //
 // id:           the id of this node                                          //
+// id_tree:      the id of the tree                                           //
 // matrix:       the sorted sample matrix                                     //
 // tolerance:    the tolerance of confusion                                   //
 // num_features: the number of features                                       //
@@ -27,9 +28,10 @@ namespace hw4 {
 // start:        the starting index                                           //
 // idx_sd:       the the index maps dense features to sparse features         //
 ////////////////////////////////////////////////////////////////////////////////
-Node::Node( const int id, SampleVector* matrix, const double tolerance,
-            const int num_features, const int num_samples,
-            const int num_positive, const int start, const int* idx_sd ) {
+Node::Node( const int id, const int id_tree, SampleVector* matrix,
+            const double tolerance, const int num_features,
+            const int num_samples, const int num_positive,
+            const int start, const int* idx_sd ) {
 
   // Check tolerance
   if ( !(Confusion(num_samples, num_positive) > tolerance) ) {
@@ -104,16 +106,17 @@ Node::Node( const int id, SampleVector* matrix, const double tolerance,
   {
     auto& vector = matrix[best_idx_s];
     for ( auto it = vector.begin()+start; it != vector.begin()+middle; ++it ) {
-      (*it)->id_ = id*2;
+      (*it)->id_[id_tree] = id*2;
     }
     for ( auto it = vector.begin()+middle; it != vector.begin()+end; ++it ) {
-      (*it)->id_ = id*2+1;
+      (*it)->id_[id_tree] = id*2+1;
     }
   }
 
   // Partition the sample matrix
   {
-    auto func = [id](Sample* x)->bool{return (x->id_ == id*2);};
+    auto func = [id, id_tree](Sample* x)->
+                bool{return (x->id_[id_tree] == id*2);};
     auto& tmp_vec = matrix[num_features];
     for ( auto i = 0; i < num_features; ++i ) {
       if ( i != best_idx_s ) {
@@ -131,9 +134,9 @@ Node::Node( const int id, SampleVector* matrix, const double tolerance,
   this->threshold_ = best_threshold;
 
   // Recursive
-  this->left_  = new Node(id*2, matrix, tolerance, num_features,
+  this->left_  = new Node(id*2, id_tree, matrix, tolerance, num_features,
                           best_samples, best_positive, start, idx_sd);
-  this->right_ = new Node(id*2+1, matrix, tolerance, num_features,
+  this->right_ = new Node(id*2+1, id_tree, matrix, tolerance, num_features,
                           num_samples-best_samples, num_positive-best_positive,
                           middle, idx_sd);
 }
@@ -203,7 +206,7 @@ Node::~Node() {
 // indent: the number of indents                                              //
 ////////////////////////////////////////////////////////////////////////////////
 void Node::Print( const int indent ) {
-  if ( this->idx_d_ < 0 ) { // Leaf
+  if ( this->idx_d_ == kNull ) { // Leaf node
     cout << setw(indent*2) << setfill(' ') << ""
          << "return ";
     if ( this->label_ ) {
@@ -211,7 +214,7 @@ void Node::Print( const int indent ) {
     } else {
       cout << "(rand()%2*2-1);" << endl;
     }
-  } else {
+  } else { // Internal node
     cout << setprecision(6) << fixed;
 
     cout << setw(indent*2) << setfill(' ') << ""

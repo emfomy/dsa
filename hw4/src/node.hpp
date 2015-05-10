@@ -10,11 +10,8 @@
 
 #define HW4_NODE_HPP_
 
-#include <cstdlib>
-#include <cmath>
 #include <iostream>
 #include <iomanip>
-#include <vector>
 #include <algorithm>
 #include "hw4.hpp"
 #include "sample.hpp"
@@ -34,8 +31,8 @@ class Node {
 
  private:
   // The dense index of the feature of this node
-  // '-1' means this node is a leaf
-  int idx_d_ = -1;
+  // 'NULL' means this node is a leaf
+  int idx_d_ = kNull;
 
   // The threshold of this node
   double threshold_;
@@ -51,10 +48,9 @@ class Node {
   Node* right_ = nullptr;
 
  public:
-  Node( const int, SampleVector*, const double, const int,
-        const int, const int, const int, const int* );
+  Node( const int, const int, SampleVector*, const double,
+        const int, const int, const int, const int, const int* );
   ~Node();
-
   void Print( const int );
 
  private:

@@ -7,6 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "sample.hpp"
+using namespace std;
 
 ////////////////////////////////////////////////////////////////////////////////
 // The namespace hw4                                                          //
@@ -18,12 +19,13 @@ namespace hw4 {
 // Initialize by a string object                                              //
 //                                                                            //
 // Parameters:                                                                //
-// str:      the string object                                                //
-// idx_size: the size of index array                                          //
-// idx_ds:   the index maps dense features to sparse features                 //
-// idx_sd:   the index maps sparse features to dense features                 //
+// str:       the string object                                               //
+// num_trees: the number of trees                                             //
+// idx_size:  the size of index array                                         //
+// idx_ds:    the index maps dense features to sparse features                //
+// idx_sd:    the index maps sparse features to dense features                //
 ////////////////////////////////////////////////////////////////////////////////
-Sample::Sample( std::string& str, int& idx_size,
+Sample::Sample( const string& str, const int num_trees, int& idx_size,
                 int (&idx_ds)[kMaxFeatures+1], int (&idx_sd)[kMaxFeatures] ) {
   char *cstr, *tmp;
   int id;
@@ -33,26 +35,39 @@ Sample::Sample( std::string& str, int& idx_size,
   strncpy(cstr, str.c_str(), str.size()+1);
 
   // Get label
-  tmp = std::strtok(cstr, " ");
+  tmp = strtok(cstr, " ");
   this->label_ = atoi(tmp);
-  tmp = std::strtok(NULL, ":");
+  tmp = strtok(NULL, ":");
 
   // Get features
   memset(this->features_, 0.0, sizeof(this->features_));
   while ( tmp != NULL ) {
     id = atoi(tmp);
-    if ( idx_ds[id] == -1 ) {
+    if ( idx_ds[id] == kNull ) {
       idx_ds[id] = idx_size;
       idx_sd[idx_size] = id;
       ++idx_size;
     }
-    tmp = std::strtok(NULL, " ");
+    tmp = strtok(NULL, " ");
     this->features_[idx_ds[id]] = atof(tmp);
-    tmp = std::strtok(NULL, ":");
+    tmp = strtok(NULL, ":");
+  }
+
+  // Initialize node IDs
+  this->id_ = new int[num_trees];
+  for ( auto i = 0; i < num_trees; i++ ) {
+    this->id_[i] = 1;
   }
 
   // Delete objects
   delete[] cstr;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// The destructor of Sample                                                   //
+////////////////////////////////////////////////////////////////////////////////
+Sample::~Sample() {
+  delete[] this->id_;
 }
 
 }

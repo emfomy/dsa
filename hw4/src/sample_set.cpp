@@ -7,6 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "sample_set.hpp"
+using namespace std;
 
 ////////////////////////////////////////////////////////////////////////////////
 // The namespace hw4                                                          //
@@ -17,8 +18,26 @@ namespace hw4 {
 // The constructor of SampleSet                                               //
 ////////////////////////////////////////////////////////////////////////////////
 SampleSet::SampleSet() {
-  for ( int i = 0; i < kMaxFeatures; i++ ) {
-    this->idx_ds_[i] = -1;
+  memset(this->idx_ds_, kNull, sizeof(this->idx_ds_));
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// The constructor of SampleSet                                               //
+//                                                                            //
+// Parameters:                                                                //
+// num_trees: the number of trees                                             //
+////////////////////////////////////////////////////////////////////////////////
+SampleSet::SampleSet( const int num_trees ) {
+  memset(this->idx_ds_, kNull, sizeof(this->idx_ds_));
+  this->num_trees_ = num_trees;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// The destructor of SampleSet                                                //
+////////////////////////////////////////////////////////////////////////////////
+SampleSet::~SampleSet() {
+  for ( auto it = this->samples_.begin(); it != this->samples_.end(); ++it ) {
+    delete (*it);
   }
 }
 
@@ -32,11 +51,12 @@ SampleSet::SampleSet() {
 // Return Value:                                                              //
 // the istream object                                                         //
 ////////////////////////////////////////////////////////////////////////////////
-std::istream& operator>>( std::istream& is, SampleSet& set ) {
+istream& operator>>( istream& is, SampleSet& set ) {
   // Load sample
-  std::string str;
-  while ( std::getline(is, str) ) {
-    auto ptr = new Sample(str, set.num_features_, set.idx_ds_, set.idx_sd_);
+  string str;
+  while ( getline(is, str) ) {
+    auto ptr = new Sample(str, set.num_trees_, set.num_features_,
+                          set.idx_ds_, set.idx_sd_);
     set.samples_.emplace_back(ptr);
   }
   set.num_samples_ = set.samples_.size();
