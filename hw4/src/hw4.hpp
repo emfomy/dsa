@@ -19,7 +19,7 @@ namespace hw4 {
 const int kMaxFeatures = 1024;
 
 // The null index
-const int kNull = 0;
+const int kNull = -1;
 
 }
 

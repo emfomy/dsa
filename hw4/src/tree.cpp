@@ -76,7 +76,7 @@ Tree::Tree( const SampleSet& set, const int id ) {
     vector = samples;
 
     // Sort samples
-    auto func = [&i](Sample* x, Sample* y)->
+    auto func = [i](Sample* x, Sample* y)->
                 bool{return (x->features_[i] < y->features_[i]);};
     sort(vector.begin(), vector.end(), func);
   }
