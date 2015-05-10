@@ -21,9 +21,9 @@ using namespace std;
 // Main function                                                              //
 ////////////////////////////////////////////////////////////////////////////////
 int main( int argc, char *argv[] ) {
-  SampleSet set;
-  ifstream fin;
   const int num_trees = (argc > 2) ? atof(argv[2]) : 1;
+  SampleSet set(num_trees);
+  ifstream fin;
 
   ios::sync_with_stdio(false);
   srand(time(NULL));

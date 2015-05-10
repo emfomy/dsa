@@ -19,9 +19,9 @@ using namespace std;
 // Main function                                                              //
 ////////////////////////////////////////////////////////////////////////////////
 int main( int argc, char *argv[] ) {
+  const double tolerance = (argc > 2) ? atof(argv[2]) : 0.0;
   SampleSet set;
   ifstream fin;
-  const double tolerance = (argc > 2) ? atof(argv[2]) : 0.0;
 
   ios::sync_with_stdio(false);
 
