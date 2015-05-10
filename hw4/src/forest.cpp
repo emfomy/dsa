@@ -27,6 +27,7 @@ Forest::Forest( const SampleSet& set, const int num_trees ) {
     auto ptr = new Tree(set, i);
     this->trees_.emplace_back(ptr);
   }
+  this->num_trees_ = num_trees;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
