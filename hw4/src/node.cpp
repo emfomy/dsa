@@ -74,7 +74,7 @@ Node::Node( const int id, const int id_tree, SampleVector* matrix,
     for ( auto it = vector.begin()+start; it != vector.begin()+end-1; ++it ) {
       ++left_samples;
       left_positive += ((*it)->label_ > 0);
-      if ( fabs((*it)->features_[i] - (*(it+1))->features_[i]) < 1e-8 ) {
+      if ( fabs((*it)->features_[i]-(*(it+1))->features_[i]) < kMinTolerance ) {
         continue;
       }
       auto tmp = Confusion(num_samples, left_samples,
