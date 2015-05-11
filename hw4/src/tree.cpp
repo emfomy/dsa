@@ -23,7 +23,8 @@ namespace hw4 {
 // tolerance: the tolerance of confusion                                      //
 ////////////////////////////////////////////////////////////////////////////////
 Tree::Tree( const SampleSet& set, const double tolerance ) {
-  int num_features = set.num_features_;
+  auto num_features = set.num_features_;
+  auto num_samples = set.samples_.size();
 
   // Initialize sample matrix
   SampleVector* matrix = new SampleVector[num_features+1];
@@ -38,13 +39,14 @@ Tree::Tree( const SampleSet& set, const double tolerance ) {
                 bool{return (x->features_[i] < y->features_[i]);};
     sort(vector.begin(), vector.end(), func);
   }
-  matrix[num_features].resize(set.samples_.size(), nullptr);
+  matrix[num_features].resize(num_samples, nullptr);
 
   // Create nodes
   auto func = [](Sample* x)->bool{return (x->label_ > 0);};
-  auto num = count_if(set.samples_.begin(), set.samples_.end(), func);
-  this->root_ = new Node(1, 0, matrix, tolerance, num_features,
-                         set.samples_.size(), num, 0, set.idx_sd_);
+  auto num_positive = count_if(set.samples_.begin(), set.samples_.end(), func);
+  this->root_ = new Node(1, 0, matrix, max(tolerance, kMinTolerance),
+                         num_features, num_samples, num_positive,
+                         0, set.idx_sd_);
 
   // Delete sample matrix
   delete[] matrix;
@@ -59,12 +61,13 @@ Tree::Tree( const SampleSet& set, const double tolerance ) {
 // id:        the id of this tree                                             //
 ////////////////////////////////////////////////////////////////////////////////
 Tree::Tree( const SampleSet& set, const int id ) {
-  int num_features = set.num_features_;
+  auto num_features = set.num_features_;
+  auto num_samples = set.samples_.size()/3;
 
   // Choose one third number of samples form the set randomly
   SampleVector samples = set.samples_;
   random_shuffle(samples.begin(), samples.end());
-  samples.resize(set.samples_.size()/3);
+  samples.resize(num_samples);
 
 
   // Initialize sample matrix
@@ -80,13 +83,14 @@ Tree::Tree( const SampleSet& set, const int id ) {
                 bool{return (x->features_[i] < y->features_[i]);};
     sort(vector.begin(), vector.end(), func);
   }
-  matrix[num_features].resize(samples.size(), nullptr);
+  matrix[num_features].resize(num_samples, nullptr);
 
   // Create nodes
   auto func = [](Sample* x)->bool{return (x->label_ > 0);};
-  auto num = count_if(samples.begin(), samples.end(), func);
-  this->root_ = new Node(1, id, matrix, 0.0, num_features,
-                         samples.size(), num, 0, set.idx_sd_);
+  auto num_positive = count_if(samples.begin(), samples.end(), func);
+  this->root_ = new Node(1, id, matrix, kMinTolerance,
+                         num_features, num_samples, num_positive,
+                         0, set.idx_sd_);
 
   // Delete sample matrix
   delete[] matrix;

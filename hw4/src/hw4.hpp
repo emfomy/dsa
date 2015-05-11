@@ -15,11 +15,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 namespace hw4 {
 
+// The null index
+const int kNull = -1;
+
 // The maximum number of features
 const int kMaxFeatures = 1024;
 
-// The null index
-const int kNull = -1;
+// The minimum tolerance
+const double kMinTolerance = 1e-8;
 
 }
 

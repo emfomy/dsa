@@ -74,9 +74,6 @@ void Forest::Print( const int indent ) {
 
 ////////////////////////////////////////////////////////////////////////////////
 // Insert the trees of this forest into standant stream                       //
-//                                                                            //
-// Parameters:                                                                //
-// indent: the number of indents                                              //
 ////////////////////////////////////////////////////////////////////////////////
 void Forest::PrintTrees() {
   for ( auto i = 0; i < num_trees_; i++ ) {
@@ -84,7 +81,7 @@ void Forest::PrintTrees() {
     cout << setw(80) << setfill('/')
          << "" << endl;
     cout << setw(78) << left << setfill(' ')
-         << "// Tree"+to_string(i)+" predict" << "//" << endl;
+         << "// Tree"+to_string(i)+" prediction" << "//" << endl;
     cout << setw(78) << setfill(' ')
          << "// " << "//\n";
     cout << setw(78) << left << setfill(' ')
@@ -100,9 +97,20 @@ void Forest::PrintTrees() {
     cout << setw(80) << setfill('/')
          << "" << endl;
     // Display function
-    cout << "int tree"+to_string(i)+"_predict( double *attr ) {" << endl;
+    cout << "int tree"+to_string(i)+"_predict( double* attr ) {" << endl;
     this->trees_[i]->Print(1);
     cout << "}" << endl << endl;
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Insert the declaration of the trees of this forest into standant stream    //
+////////////////////////////////////////////////////////////////////////////////
+void Forest::PrintDeclaration() {
+  cout << "// Tree prediction functions" << endl;
+  for ( auto i = 0; i < num_trees_; i++ ) {
+    // Display function declaration
+    cout << "int tree"+to_string(i)+"_predict( double* );" << endl;
   }
 }
 

@@ -61,7 +61,7 @@ int main( int argc, char *argv[] ) {
   cout << setw(80) << setfill('/')
        << "" << endl;
   cout << setw(78) << left << setfill(' ')
-       << "// Tree predict" << "//" << endl;
+       << "// Tree prediction" << "//" << endl;
   cout << setw(78) << setfill(' ')
        << "// " << "//\n";
   cout << setw(78) << left << setfill(' ')
@@ -78,7 +78,7 @@ int main( int argc, char *argv[] ) {
        << "" << endl;
 
   // Display function
-  cout << "int tree_predict( double *attr ) {" << endl;
+  cout << "int tree_predict( double* attr ) {" << endl;
   cout << "  // Initialize random seed" << endl;
   cout << "  srand(time(NULL));" << endl << endl;
   cout << "  // Predict response using decision tree" << endl;
