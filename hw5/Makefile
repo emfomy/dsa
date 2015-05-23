@@ -10,14 +10,16 @@ OBJECTS  = \
 
 HEADERS  = \
 	src/binomial_heap.hpp \
+	src/computer.hpp \
+	src/task.hpp \
 
 all: $(TARGETS)
 
 system: $(OBJECTS) $(HEADERS)
-	$(CC) $(OPTFLAGS) $(OBJECTS) -o $@
+	$(CC) -fno-strict-aliasing $(OPTFLAGS) $(OBJECTS) -o $@
 
 %.o: %.cpp $(HEADERS)
-	$(CC) -c $(OPTFLAGS) $< -o $@
+	$(CC) -fno-strict-aliasing -c $(OPTFLAGS) $< -o $@
 
 clean:
 	rm -rf $(TARGETS) $(OBJECTS)

@@ -19,7 +19,7 @@
 namespace hw5 {
 
 // The maximum number of binomial trees in a binomial heap
-const size_t kMaxTrees = 4;
+const size_t kMaxTrees = 32;
 
 // The empty heap
 struct EmptyHeap: public std::exception {};
@@ -46,10 +46,13 @@ class BinomialHeap {
   BinomialHeap();
   BinomialHeap( const T& root );
 
-  void Merge( BH*& that );
+  inline int size();
+
+  void Merge( BH* that );
   void Merge( BT*& a, BT*& b, BT*& c );
   void Merge( BT*& a, BT*& b );
   void Insert( const T& root );
+  T& Top();
   T& Pop();
 };
 
@@ -120,6 +123,17 @@ BinomialHeap<T>::BinomialTree::BinomialTree( const T& element ) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// Get the size of this heap                                                  //
+//                                                                            //
+// Return Value:                                                              //
+// the size of this tree                                                      //
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline int BinomialHeap<T>::size() {
+  return (this!=nullptr) ? this->size_ : 0;
+}
+
+////////////////////////////////////////////////////////////////////////////////
 // Get the size of this tree                                                  //
 //                                                                            //
 // Return Value:                                                              //
@@ -139,16 +153,14 @@ inline int BinomialHeap<T>::BinomialTree::size() {
 //                                                                            //
 // Output Parameters:                                                         //
 // this:  replaced by the sum heap                                            //
-// that:  destructed                                                          //
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-void BinomialHeap<T>::Merge( BH*& that ) {
+void BinomialHeap<T>::Merge( BH* that ) {
   BT* carry = nullptr;
   for ( size_t i = 0; i < kMaxTrees; ++i ) {
     Merge(this->tree_[i], that->tree_[i], carry);
   }
   this->size_ += that->size_;
-  delete that;
   delete carry;
 }
 
@@ -229,6 +241,32 @@ template<typename T>
 void BinomialHeap<T>::Insert( const T& element ) {
   auto temp = new BinomialHeap<T>(element);
   Merge(temp);
+  delete temp;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Get the maximum element                                                    //
+//                                                                            //
+// Return Value:                                                              //
+// the maximum element                                                        //
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+T& BinomialHeap<T>::Top() {
+  // Check feasibility
+  if ( size_ == 0 ) {
+    throw EmptyHeap();
+  }
+
+  // Find the tree contains maximum element
+  int imax = -1;
+  for ( size_t i = 0; i < kMaxTrees; ++i ) {
+    if ( tree_[i]->size() != 0 && ( imax == -1
+         || tree_[i]->root_ > tree_[imax]->root_ ) ) {
+      imax = i;
+    }
+  }
+
+  return tree_[imax]->root_;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

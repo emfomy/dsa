@@ -7,7 +7,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <iostream>
+#include <string>
 #include "binomial_heap.hpp"
+#include "computer.hpp"
 using namespace std;
 using namespace hw5;
 
@@ -15,23 +17,31 @@ using namespace hw5;
 // Main function                                                              //
 ////////////////////////////////////////////////////////////////////////////////
 int main( int argc, char *argv[] ) {
-  BinomialHeap<int> bh;
-  bh.Insert(4);
-  bh.Insert(2);
-  bh.Insert(3);
-  bh.Insert(1);
-  cout << bh.Pop() << endl;
-  cout << bh.Pop() << endl;
-  bh.Insert(8);
-  bh.Insert(3);
-  bh.Insert(2);
-  bh.Insert(3);
-  cout << bh.Pop() << endl;
-  cout << bh.Pop() << endl;
-  cout << bh.Pop() << endl;
-  cout << bh.Pop() << endl;
-  cout << bh.Pop() << endl;
-  cout << bh.Pop() << endl;
+  int c; // the number of computers in the system
+  int w; // the workload judging parameter for merging
+
+  ios::sync_with_stdio(false);
+
+  // Get parameters
+  cin >> c >> w;
+
+  // Create computers
+  auto computer = new Computer[c];
+
+  // Read commands
+  string str;
+  while ( cin >> str ) {
+    if ( str == "assign" ) {
+      Assign(computer);
+    } else if ( str == "execute" ) {
+      Execute(computer);
+    } else if ( str == "merge" ) {
+      Merge(computer, w);
+    }
+  }
+
+  // Delete computers
+  delete[] computer;
 
   return 0;
 }
