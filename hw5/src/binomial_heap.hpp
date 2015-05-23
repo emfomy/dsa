@@ -161,6 +161,7 @@ void BinomialHeap<T>::Merge( BH* that ) {
     Merge(this->tree_[i], that->tree_[i], carry);
   }
   this->size_ += that->size_;
+  that->size_ = 0;
   delete carry;
 }
 
