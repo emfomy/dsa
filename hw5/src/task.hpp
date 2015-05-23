@@ -36,7 +36,7 @@ typedef uint32_t Priority;
 ////////////////////////////////////////////////////////////////////////////////
 Task CreateTask( ID id, Priority p ) {
   Task task;
-  reinterpret_cast<uint32_t*>(&task)[0] = -id;
+  reinterpret_cast<uint32_t*>(&task)[0] = UINT32_MAX-id;
   reinterpret_cast<uint32_t*>(&task)[1] = p;
   return task;
 }
@@ -51,7 +51,7 @@ Task CreateTask( ID id, Priority p ) {
 // the task ID                                                                //
 ////////////////////////////////////////////////////////////////////////////////
 ID TaskID( Task task ) {
-  return (-reinterpret_cast<uint32_t*>(&task)[0]);
+  return (UINT32_MAX-reinterpret_cast<uint32_t*>(&task)[0]);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
