@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Data Structures and Algorithms - Homework 5                                //
-// computer.hpp                                                                 //
-// The header of main functions                                               //
+// computer.hpp                                                               //
+// The header file of Computer                                                //
 //                                                                            //
 // Author: emfo<emfomy@gmail.com>                                             //
 ////////////////////////////////////////////////////////////////////////////////
