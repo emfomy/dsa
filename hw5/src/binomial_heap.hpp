@@ -49,11 +49,13 @@ class BinomialHeap {
   inline int size();
 
   void Merge( BH* that );
-  void Merge( BT*& a, BT*& b, BT*& c );
-  void Merge( BT*& a, BT*& b );
   void Insert( const T& root );
   T& Top();
   T& Pop();
+
+ private:
+  void Merge( BT*& a, BT*& b, BT*& c );
+  void Merge( BT*& a, BT*& b );
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -88,9 +90,9 @@ class BinomialHeap<T>::BinomialTree {
 template<typename T>
 BinomialHeap<T>::BinomialHeap() {
   for ( size_t i = 0; i < kMaxTrees; ++i ) {
-    this->tree_[i] = nullptr;
+    tree_[i] = nullptr;
   }
-  this->size_ = 0;
+  size_ = 0;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -102,9 +104,9 @@ BinomialHeap<T>::BinomialHeap() {
 template<typename T>
 BinomialHeap<T>::BinomialHeap( const T& element ) {
   for ( size_t i = 0; i < kMaxTrees; ++i ) {
-    this->tree_[i] = nullptr;
+    tree_[i] = nullptr;
   }
-  this->size_ = 1;
+  size_ = 1;
   tree_[0] = new BT(element);
 }
 
@@ -117,9 +119,9 @@ BinomialHeap<T>::BinomialHeap( const T& element ) {
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T>
 BinomialHeap<T>::BinomialTree::BinomialTree( const T& element ) {
-  this->size_ = 1;
-  this->root_ = element;
-  this->child_.clear();
+  size_ = 1;
+  root_ = element;
+  child_.clear();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -130,7 +132,7 @@ BinomialHeap<T>::BinomialTree::BinomialTree( const T& element ) {
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T>
 inline int BinomialHeap<T>::size() {
-  return (this!=nullptr) ? this->size_ : 0;
+  return (this!=nullptr) ? size_ : 0;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -141,7 +143,7 @@ inline int BinomialHeap<T>::size() {
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T>
 inline int BinomialHeap<T>::BinomialTree::size() {
-  return (this!=nullptr) ? this->size_ : 0;
+  return (this!=nullptr) ? size_ : 0;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -259,15 +261,15 @@ T& BinomialHeap<T>::Top() {
   }
 
   // Find the tree contains maximum element
-  int imax = -1;
-  for ( size_t i = 0; i < kMaxTrees; ++i ) {
-    if ( tree_[i]->size() != 0 && ( imax == -1
-         || tree_[i]->root_ > tree_[imax]->root_ ) ) {
-      imax = i;
+  BT* max_tree = nullptr;
+  for ( auto& tree : tree_ ) {
+    if ( tree->size() != 0 && ( max_tree == nullptr
+         || tree->root_ > max_tree->root_ ) ) {
+      max_tree = tree;
     }
   }
 
-  return tree_[imax]->root_;
+  return max_tree->root_;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -284,20 +286,21 @@ T& BinomialHeap<T>::Pop() {
   }
 
   // Find the tree contains maximum element
-  int imax = -1;
-  for ( size_t i = 0; i < kMaxTrees; ++i ) {
-    if ( tree_[i]->size() != 0 && ( imax == -1
-         || tree_[i]->root_ > tree_[imax]->root_ ) ) {
-      imax = i;
+  BT** tree_addr = nullptr;
+  for ( auto& tree : tree_ ) {
+    if ( tree->size() != 0 && ( tree_addr == nullptr
+         || tree->root_ > (*tree_addr)->root_ ) ) {
+      tree_addr = &tree;
     }
   }
+  auto& max_tree = *tree_addr;
 
   // Pop the maximum element from the tree
   BH* heap = nullptr;
-  T& max_element = tree_[imax]->Pop(heap);
-  size_ -= tree_[imax]->size();
-  delete tree_[imax];
-  tree_[imax] = nullptr;
+  T& max_element = max_tree->Pop(heap);
+  size_ -= max_tree->size();
+  delete max_tree;
+  max_tree = nullptr;
 
   // Merge the remaining elements into this heap
   Merge(heap);
@@ -318,15 +321,15 @@ template<typename T>
 T& BinomialHeap<T>::BinomialTree::Pop( BH*& heap ) {
   // Create a temporary heap
   heap = new BH();
-  heap->size_ = this->size_-1;
+  heap->size_ = size_-1;
 
   // Put subtrees into the heap
   size_t i = 0;
-  for ( auto& tree : this->child_ ) {
+  for ( auto& tree : child_ ) {
     heap->tree_[i++] = tree;
   }
 
-  return this->root_;
+  return root_;
 }
 
 }
