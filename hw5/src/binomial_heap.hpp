@@ -44,7 +44,6 @@ class BinomialHeap {
 
  public:
   BinomialHeap();
-  BinomialHeap( const T& root );
 
   inline int size();
 
@@ -54,6 +53,8 @@ class BinomialHeap {
   T& Pop();
 
  private:
+  BinomialHeap( const T& root );
+
   void Merge( BT*& a, BT*& b, BT*& c );
   void Merge( BT*& a, BT*& b );
 };
