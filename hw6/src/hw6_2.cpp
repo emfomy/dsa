@@ -37,7 +37,7 @@ int main( int argc, char const *argv[] ) {
   auto bst_tree = bst_create(string_compare, nullptr, nullptr);
   auto rb_tree  = rb_create(string_compare, nullptr, nullptr);
   for( auto i = 0; i < kNumInput; ++i ) {
-    cin >> str[i];
+    getline(cin, str[i]);
     avl_probe(avl_tree, &str[i]);
     bst_probe(bst_tree, &str[i]);
     rb_probe(rb_tree, &str[i]);
