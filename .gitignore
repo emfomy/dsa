@@ -29,6 +29,10 @@
 
 # Other files
 sftp-config.json
+avl*
+bst*
+rb*
+Makefile
 
 # Folders
 hw1/*
