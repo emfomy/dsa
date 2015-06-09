@@ -8,8 +8,6 @@ HEADERS1 = \
 HEADERS2 = \
 	src/node.hpp
 
-all: $(TARGET)
-
 src/%.o: src/%.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 

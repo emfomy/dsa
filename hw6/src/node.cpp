@@ -87,7 +87,7 @@ int Node::Afford( const long long int money ) {
 int price_compare( const void *pa, const void *pb, void *param ) {
   const int& a = *reinterpret_cast<const int*>(pa);
   const int& b = *reinterpret_cast<const int*>(pb);
-  return (a < b);
+  return ((a > b) ? 1 : ((a < b) ? -1 : 0));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -101,7 +101,9 @@ void price_merge( avl_node *node, avl_table *tree ) {
   if ( node == nullptr ) {
     return;
   }
-  avl_probe(tree, node->avl_data);
+  for ( auto i = 0; i < node->avl_cnt; ++i ) {
+    avl_probe(tree, node->avl_data);
+  }
   price_merge(node->avl_link[0], tree);
   price_merge(node->avl_link[1], tree);
 }
