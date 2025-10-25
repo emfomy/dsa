@@ -34,3 +34,6 @@ hw3/output
 hw3/sample/*
 hw4/run/*
 hw5/run/*
+avl*
+bst*
+rb*
