@@ -28,12 +28,4 @@
 *.app
 
 # Other files
-sftp-config.json
 hw4/run/*
-
-# Folders
-hw1/*
-hw2/*
-hw3/*
-hw5/*
-hw6/*
