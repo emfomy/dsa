@@ -28,15 +28,6 @@
 *.app
 
 # Other files
-sftp-config.json
 avl*
 bst*
 rb*
-Makefile
-
-# Folders
-hw1/*
-hw2/*
-hw3/*
-hw4/*
-hw5/*
