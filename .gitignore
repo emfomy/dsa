@@ -29,11 +29,16 @@
 
 # Other files
 sftp-config.json
+*.txt
+hw3/input
+hw3/output
+hw3/sample/*
 hw4/run/*
 
 # Folders
 hw1/*
 hw2/*
 hw3/*
+hw4/*
 hw5/*
 hw6/*
