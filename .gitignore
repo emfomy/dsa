@@ -28,14 +28,6 @@
 *.app
 
 # Other files
-sftp-config.json
 hw3/input
 hw3/output
 hw3/sample/*
-
-# Folders
-hw1/*
-hw2/*
-hw4/*
-hw5/*
-hw6/*
