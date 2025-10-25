@@ -32,10 +32,12 @@ sftp-config.json
 hw3/input
 hw3/output
 hw3/sample/*
+*.txt
 
 # Folders
 hw1/*
 hw2/*
+hw3/*
 hw4/*
 hw5/*
 hw6/*
